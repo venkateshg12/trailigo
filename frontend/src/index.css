@@ -18,6 +18,13 @@
   font-family: "retro";
 }
 
+@font-face {
+  font-family: "tumbler";
+  src: url("../public/fonts/TumblerGlass.ttf")format("truetype");
+}
+.font-tumbler {
+  font-family: "tumbler";
+}
 :root {
   --font-michroma : "Michroma", sans-serif;
   --font-kanit : "Kanit", sans-serif;
@@ -41,4 +48,12 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.floating {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.floating:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }

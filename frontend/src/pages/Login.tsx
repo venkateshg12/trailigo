@@ -1,7 +1,12 @@
+import Home from "./Home";
+
 const Login = () => {
   return (
     <div>
-        <h1>Login</h1>
+      <Home/>
+      <div className="absolute inset-0 z-50 flex h-screen ">
+        <h1 className="text-white">Hello WOrld</h1>
+      </div>
     </div>
   )
 }

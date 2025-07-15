@@ -11,8 +11,8 @@ const App = () => {
         <Routes>
           <Route element={<WithHeaderLayOut />}>
             <Route path="/" element={<Home />} />
-            <Route path="signin" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/create-trip" element={<MainPage />} />
         </Routes>

@@ -5,7 +5,7 @@ import glacier from "../assets/glacier.webp";
 import mountain from "../assets/mountain.webp";
 import switzerland from "../assets/switzerland.webp";
 
-export const navlinks = ["Home", "Register", "Sign in"];
+export const navlinks = [{ name: "Home", path: "/" },{ name: "Register", path: "/register" },{ name: "Sign In", path: "/signin" }];
 
 export const images = [bananaBeach, burjAlarab, glacier, mountain, switzerland]
 
@@ -25,7 +25,7 @@ interface HamburgerMenuProps {
 
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     size = 32,
-    color = '#333',
+    color = '#fff',
     strokeWidth = 3,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
