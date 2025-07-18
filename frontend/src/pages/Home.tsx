@@ -1,10 +1,15 @@
+
 import { useEffect, useRef, useState } from "react";
-import { address, images } from "@/constants/constant";
+import { address, homeInfoOne, homeInfoTwo, image1, image2, images } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Navbar from "./Navbar";
 import SplitText from "gsap/SplitText";
 import { Link } from "react-router-dom";
+import HomeInfoCard from "@/components/HomeInfoCard";
+import desImage1 from "@/assets/destinations1.webp"
+import desImage2 from "@/assets/destination2.webp"
+import HomeInfo from "@/components/HomeInfo";
 
 gsap.registerPlugin(SplitText);
 
@@ -91,50 +96,66 @@ const Home = () => {
             ease: "power3.out",
         });
 
-        // Optional: cleanup
         return () => {
             split.revert();
         };
     }, []);
     return (
-        <div className="relative w-full h-screen overflow-hidden bg-black">
-            <div className="top-0 z-[100] left-0 w-full absolute">
-                <Navbar />
-            </div>
-            <div className="absolute inset-0">
-                {images.map((image, index) => (
-                    <div
-                        key={index}
-                        ref={(el) => { slideRefs.current[index] = el; }}
-                        className={`absolute inset-0 bg-cover md:bg-center ${index === currentIndex ? "z-20" : "z-10"
-                            }`}
-                        style={{
-                            backgroundImage: `url(${image})`,
-                            opacity: index === currentIndex ? 1 : 0,
-                            transition: "opacity 0.5s ease",
-                            filter: "brightness(0.9)",
-                        }}
-                    />
-                ))}
-            </div>
-            <div className="absolute inset-0 z-50 px-[1rem] flex flex-col items-center bg-black/50 -mt-[12rem] justify-center">
-                <h1 ref={titleRef} className="text-white text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
-                <span className="text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
-                <Link to="/signin">
-                <button className="px-3 py-1 bg-red-500 text-white rounded-2xl my-3 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
-                </Link>
-            </div>
-            <div ref={addressRef} className="absolute z-30 right-10 bottom-15 md:right-20 md:bottom-15 text-white text-right">
-                <span className="block text-[2.6rem] md:text-[3.5rem] 2xl:text-[5rem] text-gray-300 font-retro tracking-wide">
-                    {address[currentIndex]?.ad1}
-                </span>
-                <span className="block text-[2rem] 2xl:text-[4rem] font-montreal font-light text-gray-400">
-                    {address[currentIndex]?.ad2}
-                </span>
+        <>
+            <div className="relative w-full h-screen overflow-hidden bg-black">
+                <div className="absolute inset-0">
+                    {images.map((image, index) => (
+                        <div
+                            key={index}
+                            ref={(el) => { slideRefs.current[index] = el; }}
+                            className={`absolute  inset-0 ${index === currentIndex ? "z-20" : "z-10"
+                                }`}
+                            style={{
+                                backgroundImage: `url(${image})`,
+                                backgroundPosition: 'center center', // Better for mobile
+                                backgroundSize: 'cover',
+                                backgroundRepeat: "no-repeat",
+                                opacity: index === currentIndex ? 1 : 0,
+                                transition: "opacity 0.5s ease",
+                                filter: "brightness(0.9)",
+                            }}
+                        />
+                    ))}
+                </div>
+                <div className="absolute inset-0 z-50 px-[1rem] flex flex-col items-center bg-black/50 md:-mt-[12rem] justify-center">
+                    <h1 ref={titleRef} className="text-white max-[500px]:text-[3rem]  min-[500px]:text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
+                    <span className="text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
+                    <Link to="/signin">
+                        <button className="px-3 py-1 bg-red-500 text-white rounded-2xl my-3 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
+                    </Link>
+                </div>
+                <div ref={addressRef} className="absolute z-30 right-10 bottom-15 md:right-20 md:bottom-15 text-white text-right">
+                    <span className="block text-[2.6rem] md:text-[3.5rem] 2xl:text-[5rem] text-gray-300 font-retro tracking-wide">
+                        {address[currentIndex]?.ad1}
+                    </span>
+                    <span className="block text-[2rem] 2xl:text-[4rem] font-montreal font-light text-gray-400">
+                        {address[currentIndex]?.ad2}
+                    </span>
+                </div>
+
+                <div className="absolute z-20 inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 pointer-events-none" />
             </div>
 
-            <div className="absolute z-20 inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none" />
-        </div>
+
+            <div>
+                <div className="h-screen w-full py-10 flex flex-col flex-1">
+                <HomeInfo details={homeInfoOne} image={desImage1} />
+                    <HomeInfoCard details={homeInfoOne} image={image1} className="min-[800px]:justify-center" />
+                </div>
+            </div>
+
+            <div>
+                <div className="h-screen w-full py-10 flex flex-col items-center flex-1 ">
+                    <HomeInfo details={homeInfoOne} image={desImage2} />
+                    <HomeInfoCard details={homeInfoTwo} image={image2} className="items-center" />
+                </div>
+            </div>
+        </>
     );
 };
 
