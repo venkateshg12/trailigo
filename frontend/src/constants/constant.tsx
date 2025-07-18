@@ -9,6 +9,13 @@ export const navlinks = [{ name: "Home", path: "/" },{ name: "Register", path: "
 
 export const images = [bananaBeach, burjAlarab, glacier, mountain, switzerland]
 
+
+export const image1 = "https://plus.unsplash.com/premium_photo-1661964149725-fbf14eabd38c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+export const image2 = "https://images.unsplash.com/photo-1617334140746-03dc1cc27593?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+export const image3 = "https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+export const image4 = "https://plus.unsplash.com/premium_photo-1673697239633-5f5b91092bd8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+
 export const address = [
   { ad1: "Bali", ad2: "Indonesia" },
   { ad1: "Burj Al Arab", ad2: "Dubai" },
@@ -16,12 +23,23 @@ export const address = [
   { ad1: "Reinefjorden", ad2: "Norway" },
   { ad1: "Lake Lucerne", ad2: "Switzerland" },
 ];
+
+
+export const homeInfoOne = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+export const homeInfoTwo = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+export const homeInfoThree = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+export const homeInfoFour = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+export const homeInfoFive = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+export const homeInfoSix = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
+
+
 interface HamburgerMenuProps {
     size?: number;
     color?: string;
     strokeWidth?: number;
     className?: string;
 }
+
 
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     size = 32,

@@ -25,6 +25,14 @@
 .font-tumbler {
   font-family: "tumbler";
 }
+
+@font-face {
+  font-family: "freight";
+  src: url("../public/fonts/FreightBigProLight-Regular.ttf")format("truetype");
+}
+.font-freight {
+  font-family: "freight";
+}
 :root {
   --font-michroma : "Michroma", sans-serif;
   --font-kanit : "Kanit", sans-serif;

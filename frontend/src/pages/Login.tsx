@@ -1,24 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../lib/api";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   // const [error, setError] = useState<string>('');
   const navigate = useNavigate();
-  const { mutate: signIn, isPending, isError, error } = useMutation({
-    mutationFn: login,
-    onSuccess: () => {
-      navigate('/', {
-        replace: true,
-      })
-    },
-    onError: (err: any) => {
-      console.log("Mutation Error:", err);
-    },
-  })
+  // const { mutate: signIn, isPending, isError, error } = useMutation({
+  //   mutationFn: login,
+  //   onSuccess: () => {
+  //     navigate('/', {
+  //       replace: true,
+  //     })
+  //   },
+  //   onError: (err: any) => {
+  //     console.log("Mutation Error:", err);
+  //   },
+  // })
 
   return (
     <div>
