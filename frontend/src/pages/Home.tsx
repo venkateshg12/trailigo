@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import { address, homeInfoOne, homeInfoTwo, image1, image2, images } from "@/constants/constant";
+import { address, HomeInfoOne, homeInfoOneOne, images } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Navbar from "./Navbar";
@@ -141,20 +141,21 @@ const Home = () => {
                 <div className="absolute z-20 inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 pointer-events-none" />
             </div>
 
-
             <div>
-                <div className="h-screen w-full py-10 flex flex-col flex-1">
-                <HomeInfo details={homeInfoOne} image={desImage1} />
-                    <HomeInfoCard details={homeInfoOne} image={image1} className="min-[800px]:justify-center" />
+                <div className="h-screen w-full py-5 flex flex-col flex-1">
+                    <HomeInfo details={homeInfoOneOne} image={desImage1} />
+                    <div className="md:ml-auto">
+                    <HomeInfoCard items={HomeInfoOne} />
+                    </div>
                 </div>
             </div>
 
+            {/* 
             <div>
                 <div className="h-screen w-full py-10 flex flex-col items-center flex-1 ">
-                    <HomeInfo details={homeInfoOne} image={desImage2} />
-                    <HomeInfoCard details={homeInfoTwo} image={image2} className="items-center" />
+                    <HomeInfo details={homeInfoOneOne} image={desImage2} />
                 </div>
-            </div>
+            </div> */}
         </>
     );
 };

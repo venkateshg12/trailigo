@@ -5,6 +5,7 @@
   font-family: "Montreal";
   src: url("../public/fonts/NeueMontreal-Regular.ttf")format("truetype");
 }
+
 .font-montreal {
   font-family: "Montreal";
 }
@@ -22,6 +23,7 @@
   font-family: "tumbler";
   src: url("../public/fonts/TumblerGlass.ttf")format("truetype");
 }
+
 .font-tumbler {
   font-family: "tumbler";
 }
@@ -30,12 +32,14 @@
   font-family: "freight";
   src: url("../public/fonts/FreightBigProLight-Regular.ttf")format("truetype");
 }
+
 .font-freight {
   font-family: "freight";
 }
+
 :root {
-  --font-michroma : "Michroma", sans-serif;
-  --font-kanit : "Kanit", sans-serif;
+  --font-michroma: "Michroma", sans-serif;
+  --font-kanit: "Kanit", sans-serif;
 }
 
 .font-michroma {
@@ -61,7 +65,22 @@
 .floating {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .floating:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.zoom_In {
+  animation: animate 10s ease-in-out infinite alternate;
+}
+
+@keyframes animate {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.4);
+  }
 }
