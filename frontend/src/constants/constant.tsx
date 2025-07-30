@@ -45,17 +45,16 @@ export const HomeInfoOne = [
     {
         details: homeInfoOneOne,
         image: image11,
-        className: "min-[800px]:justify-center",
+     
     },
     {
         details: homeInfoOneTwo,
         image: image12,
-        className: "min-[800px]:justify-center",
     },
+       
     {
         details: homeInfoOneThree,
         image: image13,
-        className: "min-[800px]:justify-center",
     }
 ]
 
