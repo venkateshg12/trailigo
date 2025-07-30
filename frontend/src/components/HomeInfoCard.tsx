@@ -22,7 +22,7 @@ const HomeInfoCard = ({ items }: HomeInfoProps) => {
         }
     };
 
-   /* useGSAP(() => {
+    useGSAP(() => {
         const cards = cardRefs.current.filter((card): card is HTMLDivElement => card !== null);
         
         if (cards.length === 0) return;
@@ -43,7 +43,7 @@ const HomeInfoCard = ({ items }: HomeInfoProps) => {
         return () => {
             timeline.kill();
         };
-    }, { scope: containerRef });*/
+    }, { scope: containerRef });
     return (
         <div ref={containerRef} className="relative h-[500px] w-full overflow-hidden">
             <div className="relative w-full h-full">
@@ -61,7 +61,7 @@ const HomeInfoCard = ({ items }: HomeInfoProps) => {
                 ))}
 
 
-                
+
             </div>
         </div>
     )
