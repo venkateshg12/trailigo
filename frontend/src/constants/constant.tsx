@@ -58,6 +58,7 @@ export const HomeInfoOne = [
     }
 ]
 
+
 export const houseInfoTwo = [
      {
         details : homeInfoTwoOne,

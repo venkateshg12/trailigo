@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import { address, HomeInfoOne, homeInfoOneOne, images } from "@/constants/constant";
+import { address, HomeInfoOne, homeInfoOneOne, homeInfoOneTwo, image11, images } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Navbar from "./Navbar";
@@ -142,11 +142,9 @@ const Home = () => {
             </div>
 
             <div>
-                <div className="h-screen w-full py-5 flex flex-col flex-1">
+                <div className="min-h-screen w-full py-6 2xl:py-20 flex justify-center flex-col gap-12 md:gap-[7rem] md:px-[7rem]">
                     <HomeInfo details={homeInfoOneOne} image={desImage1} />
-                    <div className="md:ml-auto">
                     <HomeInfoCard items={HomeInfoOne} />
-                    </div>
                 </div>
             </div>
 
