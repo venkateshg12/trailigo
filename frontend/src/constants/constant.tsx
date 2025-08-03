@@ -41,41 +41,50 @@ export const homeInfoFive = "Design your dream trip effortlessly with Trip Plann
 export const homeInfoSix = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
 
 
+export const InfoOne = ["About", "Contact Us", "Careers", "Culture", "Blog"];
+export const InfoTwo = ["Getting Started", "Help Center", "Server Status", "Support", "Report a bug"]
+
 export const HomeInfoOne = [
     {
         details: homeInfoOneOne,
         image: image11,
-     
+        className : "md:ml-auto"
+        
     },
     {
         details: homeInfoOneTwo,
         image: image12,
+        className : "md:ml-auto"
     },
-       
+    
     {
         details: homeInfoOneThree,
         image: image13,
+        className : "md:ml-auto"
     }
 ]
 
 
-export const houseInfoTwo = [
+export const HomeInfoTwo = [
      {
         details : homeInfoTwoOne,
         image : image21,
-        className : "min-[800px]:justify-center",
+        className : "md:mr-auto",
     },
      {
         details : homeInfoTwoTwo,
         image : image22,
-        className : "min-[800px]:justify-center",
+        className : "md:mr-auto",
     },
      {
         details : homeInfoTwoThree,
         image : image23,
-        className : "min-[800px]:justify-center",
+        className : "md:mr-auto",
     }
 ]
+
+export const details1 = "Smart Travel Planner – Everything You Need in One Place";
+export const details2 = "Take the stress out of trip planning. Our intelligent platform helps you manage flights, hotels, bookings, and even travel tips—everything you need, all in one convenient spot.";
 
 
 interface HamburgerMenuProps {

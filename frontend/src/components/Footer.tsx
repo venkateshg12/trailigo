@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="flex flex-col font-bold font-montreal ">
             {
               InfoOne.map((info, index) => (
-                <span key={index} className="cursor-pointer hover-underline text-nowrap text-[3vw] md:text-2xl ">{info}</span>
+                <span key={index} className="cursor-pointer hover:underline text-nowrap text-[3vw] md:text-2xl ">{info}</span>
               ))
             }
           </div>
@@ -30,7 +30,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-center gap-10  my-10  items-center cursor-pointer">
-        <img src={twitter} alt="" className="md:w-[2rem] md:h-[2rem] w-[9vw] h-[9vw]- hover:scale-[1.05] " />
+        <img src={twitter} alt="" className="md:w-[2rem] md:h-[2rem] w-[9vw] h-[9vw] hover:scale-[1.05]" />
         <img src={facebook} alt="" className="md:w-[2rem] md:h-[2rem] w-[9vw] h-[9vw]  hover:scale-[1.05]" />
         <img src={instagram} alt="" className="md:w-[2rem] md:h-[2rem] w-[9vw] h-[9vw]  hover:scale-[1.05]" />
         <img src={linkedin} alt="" className="md:w-[2rem] md:h-[2rem] w-[9vw] h-[9vw]  hover:scale-[1.05]" />
@@ -38,5 +38,4 @@ const Footer = () => {
     </div>
   )
 }
-
 export default Footer;

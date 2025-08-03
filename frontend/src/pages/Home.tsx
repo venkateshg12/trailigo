@@ -1,126 +1,46 @@
 
 import { useEffect, useRef, useState } from "react";
-import { address, HomeInfoOne, homeInfoOneOne, homeInfoOneTwo, image11, images } from "@/constants/constant";
+import { details1, details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Navbar from "./Navbar";
-import SplitText from "gsap/SplitText";
 import { Link } from "react-router-dom";
-import HomeInfoCard from "@/components/HomeInfoCard";
 import desImage1 from "@/assets/destinations1.webp"
 import desImage2 from "@/assets/destination2.webp"
 import HomeInfo from "@/components/HomeInfo";
+import HomeInfoCardOne from "@/components/HomeInfoCardOne";
+import HomeInfoCardTwo from "@/components/HomeInfoCardTwo";
+import Footer from "@/components/Footer";
+import ImageAnimation from "@/components/ImageAnimation";
+import SplitText from "gsap/SplitText";
+import ScrollTrigger from "gsap/ScrollTrigger"
+import { registerAnimateCharsEffect } from "@/animations/animation";
 
-gsap.registerPlugin(SplitText);
 
+gsap.registerPlugin(SplitText, ScrollTrigger);
 
 const Home = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-    const addressRef = useRef<HTMLDivElement | null>(null);
-    const titleRef = useRef<HTMLDivElement | null>(null);
-
-    // Animate new slide in
-    const animateSlideIn = (el: HTMLElement | null) => {
-        if (!el) return;
-        gsap.fromTo(
-            el,
-            { opacity: 0, scale: 1.1 },
-            {
-                opacity: 1,
-                scale: 1,
-                duration: 1,
-                ease: "power3.out",
-            }
-        );
-    };
-
-    // Animate current slide out
-    const animateSlideOut = (el: HTMLElement | null) => {
-        if (!el) return;
-        gsap.to(el, {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.6,
-            ease: "power2.inOut",
-        });
-    };
-
-    // Move to next slide
-    const goToNextSlide = () => {
-        const currentSlide = slideRefs.current[currentIndex];
-        animateSlideOut(currentSlide);
-
-        const nextIndex = (currentIndex + 1) % images.length;
-        setCurrentIndex(nextIndex);
-    };
-
-    // Auto-play setup
-    useEffect(() => {
-        intervalRef.current = setInterval(goToNextSlide, 3000);
-        return () => clearInterval(intervalRef.current!);
-    }, [currentIndex]);
-
-    // Animate new slide when index changes
-    useEffect(() => {
-        animateSlideIn(slideRefs.current[currentIndex]);
-    }, [currentIndex]);
-
     useGSAP(() => {
-        animateSlideIn(slideRefs.current[currentIndex]);
-        // Animate address text
-        if (addressRef.current) {
-            gsap.fromTo(
-                addressRef.current,
-                { opacity: 0 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.8,
-                    ease: "power2.out",
-                }
-            );
-        }
-    }, [currentIndex]);
-
+        registerAnimateCharsEffect();
+        gsap.effects.animateChars(".char7", {duration: 0.5,staggerAmount: 0.5,staggerFrom: "random",ease: "power1.out",});
+        gsap.effects.animateChars(".char8", {duration: 0.5,staggerAmount: 0.5,staggerFrom: "random",ease: "power1.out",});
+        gsap.effects.animateChars(".char3", {opacity: 0,x: "1em",duration: 1.5,ease: "power4.out",staggerAmount: 0.8,})
+        gsap.effects.animateChars(".char4", {opacity: 0,x: "1em",duration: 1.5,ease: "power4.out",staggerAmount: 0.8,})
+    }, []);
+    const titleRef = useRef<HTMLDivElement | null>(null);
     useGSAP(() => {
         const split = new SplitText(titleRef.current, {
             type: "chars",
         });
-
-        gsap.from(split.chars, {
-            duration: 0.3,
-            opacity: 0,
-            stagger: 0.2,
-            ease: "power3.out",
-        });
-
+        gsap.from(split.chars, { duration: 0.3, opacity: 0, stagger: 0.2, ease: "power3.out", });
         return () => {
             split.revert();
         };
     }, []);
     return (
         <>
-            <div className="relative w-full h-screen overflow-hidden bg-black">
+            <div className="relative w-full h-screen overflow-hidden">
                 <div className="absolute inset-0">
-                    {images.map((image, index) => (
-                        <div
-                            key={index}
-                            ref={(el) => { slideRefs.current[index] = el; }}
-                            className={`absolute  inset-0 ${index === currentIndex ? "z-20" : "z-10"
-                                }`}
-                            style={{
-                                backgroundImage: `url(${image})`,
-                                backgroundPosition: 'center center', // Better for mobile
-                                backgroundSize: 'cover',
-                                backgroundRepeat: "no-repeat",
-                                opacity: index === currentIndex ? 1 : 0,
-                                transition: "opacity 0.5s ease",
-                                filter: "brightness(0.9)",
-                            }}
-                        />
-                    ))}
+                    <ImageAnimation />
                 </div>
                 <div className="absolute inset-0 z-50 px-[1rem] flex flex-col items-center bg-black/50 md:-mt-[12rem] justify-center">
                     <h1 ref={titleRef} className="text-white max-[500px]:text-[3rem]  min-[500px]:text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
@@ -129,31 +49,40 @@ const Home = () => {
                         <button className="px-3 py-1 bg-red-500 text-white rounded-2xl my-3 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
                     </Link>
                 </div>
-                <div ref={addressRef} className="absolute z-30 right-10 bottom-15 md:right-20 md:bottom-15 text-white text-right">
-                    <span className="block text-[2.6rem] md:text-[3.5rem] 2xl:text-[5rem] text-gray-300 font-retro tracking-wide">
-                        {address[currentIndex]?.ad1}
-                    </span>
-                    <span className="block text-[2rem] 2xl:text-[4rem] font-montreal font-light text-gray-400">
-                        {address[currentIndex]?.ad2}
-                    </span>
+                <div>
                 </div>
-
-                <div className="absolute z-20 inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 pointer-events-none" />
             </div>
-
+            <div className="my-10 md:my-20 px-2">
+                <div className="font-bold text-center md:text-3xl cursor-pointer 2xl:text-5xl font-retro text-blue-500 hover:text-blue-800">
+                    <span className="char3 text-black">Organize, <span className="text-blue-500 hover:text-blue-800 hover:scale-[1.5]">Book</span>, and <span className="text-blue-500 hover:text-blue-800 hover:scale-[1.15]">Explore</span> with Ease  </span>
+                </div>
+                <div className="text-center py-3">
+                    <span className="char8 md:max-w-2xl font-freight font-semibold max-w-sm 2xl:max-w-4xl text-[0.7rem] md:text-xl 2xl:text-3xl inline-block ">{details2}</span>
+                </div>
+            </div>
+            <div className="min-h-screen w-full py-6 2xl:py-20 flex justify-center flex-col gap-12 md:gap-[7rem] md:px-[7rem]">
+                <HomeInfo details={homeInfoThree} image={desImage1} className="md:mx-0" />
+                <HomeInfoCardOne items={HomeInfoOne} />
+            </div>
+            <div className="my-10 px-2">
+                <div className="font-bold text-center md:text-3xl cursor-pointer 2xl:text-5xl font-retro text-blue-500 hover:text-blue-800">
+                    <span className="char4 text-black">Smart Travel Planner  –  </span>
+                    <span className="char4 ">Everything You Need in One Place</span>
+                </div>
+                <div className="text-center py-3">
+                    <span className="char7 md:max-w-2xl font-freight font-semibold max-w-sm 2xl:max-w-4xl text-[0.7rem] md:text-xl 2xl:text-3xl inline-block ">{details2}</span>
+                </div>
+            </div>
             <div>
                 <div className="min-h-screen w-full py-6 2xl:py-20 flex justify-center flex-col gap-12 md:gap-[7rem] md:px-[7rem]">
-                    <HomeInfo details={homeInfoOneOne} image={desImage1} />
-                    <HomeInfoCard items={HomeInfoOne} />
+                    {/* <div className="scroll-fade-in"> */}
+                    <HomeInfo details={homeInfoFour} image={desImage2} className="md:ml-auto" />
+                    {/* </div> */}
+                    <HomeInfoCardTwo items={HomeInfoTwo} />
                 </div>
             </div>
-
-            {/* 
-            <div>
-                <div className="h-screen w-full py-10 flex flex-col items-center flex-1 ">
-                    <HomeInfo details={homeInfoOneOne} image={desImage2} />
-                </div>
-            </div> */}
+            <div className="w-full h-0.5 bg-red-400 shadow-2xl opacity-55 overflow-hidden" />
+            <Footer />
         </>
     );
 };
