@@ -3,12 +3,12 @@ import API from "@/config/appClient";
 
 
 export interface RegisterData {
-   email: string;
-   password: string;
-   confirmPassword: string
-   // Add other fields as needed, e.g., name, username, etc.
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 
 export const register = async (data: RegisterData) => {
-   return API.post("/auth/register", data);
+    return API.post("/auth/register", data);
 };
