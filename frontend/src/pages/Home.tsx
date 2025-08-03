@@ -1,6 +1,6 @@
 
-import { useEffect, useRef, useState } from "react";
-import { details1, details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo } from "@/constants/constant";
+import { useRef } from "react";
+import { details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
@@ -21,10 +21,10 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 const Home = () => {
     useGSAP(() => {
         registerAnimateCharsEffect();
-        gsap.effects.animateChars(".char7", {duration: 0.5,staggerAmount: 0.5,staggerFrom: "random",ease: "power1.out",});
-        gsap.effects.animateChars(".char8", {duration: 0.5,staggerAmount: 0.5,staggerFrom: "random",ease: "power1.out",});
-        gsap.effects.animateChars(".char3", {opacity: 0,x: "1em",duration: 1.5,ease: "power4.out",staggerAmount: 0.8,})
-        gsap.effects.animateChars(".char4", {opacity: 0,x: "1em",duration: 1.5,ease: "power4.out",staggerAmount: 0.8,})
+        gsap.effects.animateChars(".char7", { duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char8", { duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char3", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
+        gsap.effects.animateChars(".char4", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
     }, []);
     const titleRef = useRef<HTMLDivElement | null>(null);
     useGSAP(() => {

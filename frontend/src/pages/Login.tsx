@@ -7,17 +7,17 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>('');
   // const [error, setError] = useState<string>('');
   const navigate = useNavigate();
-  // const { mutate: signIn, isPending, isError, error } = useMutation({
-  //   mutationFn: login,
-  //   onSuccess: () => {
-  //     navigate('/', {
-  //       replace: true,
-  //     })
-  //   },
-  //   onError: (err: any) => {
-  //     console.log("Mutation Error:", err);
-  //   },
-  // })
+  const { mutate: signIn, isPending, isError, error } = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      navigate('/', {
+        replace: true,
+      })
+    },
+    onError: (err: any) => {
+      console.log("Mutation Error:", err);
+    },
+  })
 
   return (
     <div>

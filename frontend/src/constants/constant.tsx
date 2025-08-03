@@ -83,8 +83,13 @@ export const HomeInfoTwo = [
     }
 ]
 
-export const details1 = "Smart Travel Planner – Everything You Need in One Place";
 export const details2 = "Take the stress out of trip planning. Our intelligent platform helps you manage flights, hotels, bookings, and even travel tips—everything you need, all in one convenient spot.";
+
+export interface User {
+  email: string;
+  verified: boolean;
+  createdAt: string;
+}
 
 
 interface HamburgerMenuProps {
