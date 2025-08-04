@@ -7,6 +7,7 @@ import { OK } from "./constants/http";
 import catchError from "./utils/catchError";
 import authRoutes from "./routes/auth.routes";
 import errorHandler from "./utils/errorHandler";
+import connectToMongoDB from "./config/db";
 const app = express();
 
 // allows express server to parse json request bodies.
@@ -42,4 +43,5 @@ app.use(errorHandler)
 
 app.listen(3000, async() =>{
     console.log('Server is running on port 3000');  
-})
+    await connectToMongoDB();
+});
