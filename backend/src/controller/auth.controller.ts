@@ -12,6 +12,6 @@ export const registerHandler = catchError(async(req, res) =>{
 
     // call service 
 
-    const {user, refreshToken, accessToken} = await createAccount(request);
+    // const {user, refreshToken, accessToken} = await createAccount(request);
 
 })
