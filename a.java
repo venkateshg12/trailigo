@@ -17,33 +17,86 @@ public class a {
             for (int i = 0; i < n; i++) {
                 arr[i] = Integer.parseInt(num[i]);
             }
-            int ans = 0;
-            int i = 0;
-            while( i  < n){
-                if(arr[i] == 0){
-                    if(i < n-1 && arr[i + 1] == 1) {
-                        ans += 2;
-                        i++;
-                    }else {
-                        ans += 1;
-                    }
-                }else if (arr[i] == 1) {
-                    if(i < n-1 && arr[i + 1] == 0) {
-                        ans += 2;
-                        i++;
-                    }else{
-                        ans += arr[i];
-                    }
-                }else {
-                    ans+= arr[i];
+            int k = 0;
+            for (int i = 0; i < 3; i++) {
+                if (arr[i] == -1) {
+                    k++;
                 }
-                i++;
             }
-            out.println(ans);
+            boolean flag = true;
+            if (k == 0) {
+                int min = Math.min(arr[0], Math.min(arr[1], arr[2]));
+                int max = Math.max(arr[0], Math.max(arr[1], arr[2]));
+                int mex = findMex(arr[0], arr[1], arr[2]);
+                // out.println(mex + " " +max + " " + min);
+                if (mex != (max - min)) {
+                    out.println("NO");
+                    continue;
+                }
+            } else if (k == 1) {
+                int sum = arr[0] + arr[1] + arr[2];
+                int max = Math.max(arr[0], Math.max(arr[1], arr[2]));
+                // out.println(max + " " + sum);
+                if (sum != (max * 2) - 1) {
+                    out.println("NO");
+                    continue;
+                }
+            } else if (k == 2) {
+                int max = Math.max(arr[0], Math.max(arr[1], arr[2]));
+                if (max == 0) {
+                    out.println("NO");
+                    continue;
+                }
+
+            }
+            for (int i = 1; i < n - 2; i++) {
+                if (arr[i - 1] == -1) {
+                    k--;
+                }
+                if (arr[i + 2] == -1) {
+                    k++;
+                }
+                if (k == 0) {
+                    int min = Math.min(arr[i], Math.min(arr[i + 1], arr[i + 2]));
+                    int max = Math.max(arr[i], Math.max(arr[i + 1], arr[i + 2]));
+                    int mex = findMex(arr[i], arr[i + 1], arr[i + 2]);
+                    if (mex != (max - min)) {
+                        flag = false;
+                        break;
+                    }
+                } else if (k == 1) {
+                    int max = Math.max(arr[i], Math.max(arr[i + 1], arr[i + 2]));
+                    int sum = arr[0] + arr[1] + arr[2];
+                    if (sum != (max * 2) - 1) {
+                        flag = false;
+                        break;
+                    } else if (k == 2) {
+                        int ma = Math.max(arr[i], Math.max(arr[i + 1], arr[i + 2]));
+                        if (ma == 0) {
+                            out.println("NO");
+                            continue;
+                        }
+                    }
+                }
+            }
+            out.println(flag ? "YES" : "NO");
         }
         out.flush();
         out.close();
         read.close();
+    }
+
+    public static int findMex(int a, int b, int c) {
+        boolean[] present = new boolean[101];
+        present[a] = true;
+        present[b] = true;
+        present[c] = true;
+
+        for (int i = 0; i < 101; i++) {
+            if (!present[i])
+                return i;
+        }
+        return 0;
     }
 
     public static int solve(char[][] grid, int startRow, int startColumn) {

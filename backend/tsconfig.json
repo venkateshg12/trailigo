@@ -114,7 +114,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "src/utils/sendVerificationEmail.ts"  ],
   "exclude": [
     "node_modules",
     "dist"

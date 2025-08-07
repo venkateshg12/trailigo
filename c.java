@@ -9,25 +9,27 @@ public class c {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            int n = Integer.parseInt(read.readLine().trim());
             String[] val = read.readLine().split(" ");
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = Integer.parseInt(val[i]);
+            int n = Integer.parseInt(val[0]);
+            int x = Integer.parseInt(val[1]);
+            int y = Integer.parseInt(val[2]);
+            if (x > y) {
+                int temp = x;
+                x = y;
+                y = temp;
             }
-            int maxLen = 0;
-            int currentLen = 0;
-            int i = 0;
-            while(i < n) {
-                if(arr[i] == 0) {
-                    currentLen++;
-                    maxLen = Math.max(maxLen, currentLen);
-                }else {
-                    currentLen = 0;
+            if (x != 0 || y == 0 || (n - 1) % y != 0) {
+                out.println(-1);
+            } else {
+                int leader = 2;
+                for (int i = 0; i < (n - 1) / y; i++) {
+                    for (int j = 0; j < y; j++) {
+                        out.print(leader + " ");
+                    }
+                    leader += y;
                 }
-                i++;
+                out.println();
             }
-            out.println(maxLen);
         }
         out.flush();
         out.close();
