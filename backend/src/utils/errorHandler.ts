@@ -7,7 +7,6 @@ const handleAppError = (res: Response, error: AppError) => {
 
     return res.status(error.statusCode).json({
         message: error.message,
-        errorCode: error.errorCode,
     })
 }
 

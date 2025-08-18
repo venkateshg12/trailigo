@@ -26,12 +26,14 @@ const userSchema = new mongoose.Schema<UserDocument>(
     }
 );
 
+// .pre is a mongoose middleware hook which runs before the document will be saved into mongoDB
+
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
-        return next();
+    if (!this.isModified("password")) { 
+        return next(); // Skip hashing if password wasn't changed.
     }
     this.password = await hashValue(this.password);
-    next();
+    next(); // I am done continue saving.
 })
 
 userSchema.methods.comparePassword = async function (val: string) {

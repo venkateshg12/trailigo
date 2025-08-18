@@ -30,7 +30,7 @@ export const createAccount = async (data: createAccountParams) => {
         email: data.email,
         password: data.password,
     })
-
+    
     // send verification code +
     const verificationCode = await verificationCodeModel.create({
         userId: user._id,
@@ -40,20 +40,20 @@ export const createAccount = async (data: createAccountParams) => {
     })
 
     try {
-        await sendVerificationEmail(user.email, otp); 
+        await sendVerificationEmail(user.email, otp);
     } catch (error) {
-        console.error("Failed to send OTP email:", error);
+        appAssert(false, 500, "Failed to send OTP email");
     }
 
     // create sesssions 
     const session = await sessionModel.create({
-        userId : user._id,
-        userAgent : data.userAgent,
+        userId: user._id,
+        userAgent: data.userAgent,
     })
 
     // sign access token && refresh token
-    const refreshToken = signToken({sessionId : session._id}, refreshTokenSignOptions)
-     const accessToken = signToken({ userId: user._id, sessionId: session._id });
+    const refreshToken = signToken({ sessionId: session._id }, refreshTokenSignOptions)
+    const accessToken = signToken({ userId: user._id, sessionId: session._id });
     // return user & tokens
     return {
         user: user.omitPassword(),

@@ -8,6 +8,7 @@ import catchError from "./utils/catchError";
 import authRoutes from "./routes/auth.routes";
 import errorHandler from "./utils/errorHandler";
 import connectToMongoDB from "./config/db";
+import mongoose from "mongoose";
 const app = express();
 
 // allows express server to parse json request bodies.
