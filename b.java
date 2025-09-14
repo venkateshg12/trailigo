@@ -10,20 +10,18 @@ public class b {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            String[] vala = read.readLine().split(" ");
-            String[] valb = read.readLine().split(" ");
-            String[] valc = read.readLine().split(" ");
-            int[][] a = new int[1][2];
-            int[][] b = new int[1][2];
-            int[][] c = new int[1][2];
-            for (int i = 0; i < 2; i++) {
-                a[0][i] = Integer.parseInt(vala[i]);
-                b[0][i] = Integer.parseInt(valb[i]);
-                c[0][i] = Integer.parseInt(valc[i]);
+            int n = Integer.parseInt(read.readLine().trim());
+            String[] val = read.readLine().split(" ");
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = Integer.parseInt(val[i]);
             }
-            long ans = cal(a[0][0], b[0][0], c[0][0]) + cal(a[0][1], b[0][1], c[0][1]);
-            ans++;
-            out.println(ans);
+            int res = arr[0];
+            for (int i = 1; i < n; i++) {
+                res &= arr[i];
+            }
+            out.println(res);
+
         }
         out.flush();
         out.close();
@@ -40,31 +38,34 @@ public class b {
         return 0;
     }
 
-    /* public static int solve(char[][][] map, boolean[][][] visited, int L, int R, int C, int sl, int sr, int sc) {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] { sl, sr, sc, 0 });
-        visited[sl][sr][sc] = true;
-
-        while (!q.isEmpty()) {
-            int[] node = q.poll();
-            int l = node[0], r = node[1], c = node[2], d = node[3];
-
-            if (map[l][r][c] == 'E') {
-                return d;
-            }
-
-            for (int i = 0; i < 6; i++) {
-                int nl = l + dl[i];
-                int nr = r + dr[i];
-                int nc = c + dc[i];
-
-                if (nl >= 0 && nl < L && nr >= 0 && nr < R && nc >= 0 && nc < C &&
-                        !visited[nl][nr][nc] && map[nl][nr][nc] != '#') {
-                    visited[nl][nr][nc] = true;
-                    q.add(new int[] { nl, nr, nc, d + 1 });
-                }
-            }
-        }
-        return -1;
-    }*/
-} 
+    /*
+     * public static int solve(char[][][] map, boolean[][][] visited, int L, int R,
+     * int C, int sl, int sr, int sc) {
+     * Queue<int[]> q = new LinkedList<>();
+     * q.add(new int[] { sl, sr, sc, 0 });
+     * visited[sl][sr][sc] = true;
+     * 
+     * while (!q.isEmpty()) {
+     * int[] node = q.poll();
+     * int l = node[0], r = node[1], c = node[2], d = node[3];
+     * 
+     * if (map[l][r][c] == 'E') {
+     * return d;
+     * }
+     * 
+     * for (int i = 0; i < 6; i++) {
+     * int nl = l + dl[i];
+     * int nr = r + dr[i];
+     * int nc = c + dc[i];
+     * 
+     * if (nl >= 0 && nl < L && nr >= 0 && nr < R && nc >= 0 && nc < C &&
+     * !visited[nl][nr][nc] && map[nl][nr][nc] != '#') {
+     * visited[nl][nr][nc] = true;
+     * q.add(new int[] { nl, nr, nc, d + 1 });
+     * }
+     * }
+     * }
+     * return -1;
+     * }
+     */
+}

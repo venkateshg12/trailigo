@@ -15,7 +15,7 @@ export const loginSchema = z.object({
 export const registerSchema = loginSchema.extend({
     name : nameSchema,
     confirmPassword: z.string().min(6).max(255),
-}).refine((data) => data.password === data.confirmPassword, {
+}).refine((data) => data.password === data.confirmPassword, { // refine() function in zod that actually adds custom validation logic.
     "message": "password do not match",
     path: ["confirmPassword"],
 })

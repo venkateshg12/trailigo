@@ -36,7 +36,7 @@ app.get("/", catchError(
         })
     }
 ))
-
+// .use() is a method in express that actually registers the middleware and connects the routes together.
 app.use("/auth", authRoutes);
 
 app.use(errorHandler)

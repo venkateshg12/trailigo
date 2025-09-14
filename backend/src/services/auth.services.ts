@@ -34,6 +34,7 @@ export const createAccount = async (data: createAccountParams) => {
     // send verification code +
     const verificationCode = await verificationCodeModel.create({
         userId: user._id,
+        email : user.email,
         code: otp,
         type: verificationCodeTypes.EmailVerification,
         expiresAt: tenMinutesFromNow(),
@@ -45,6 +46,8 @@ export const createAccount = async (data: createAccountParams) => {
         appAssert(false, 500, "Failed to send OTP email");
     }
 
+
+
     // create sesssions 
     const session = await sessionModel.create({
         userId: user._id,
@@ -52,13 +55,12 @@ export const createAccount = async (data: createAccountParams) => {
     })
 
     // sign access token && refresh token
-    const refreshToken = signToken({ sessionId: session._id }, refreshTokenSignOptions)
-    const accessToken = signToken({ userId: user._id, sessionId: session._id });
+    const refreshToken = signToken({sessionId: session._id}, refreshTokenSignOptions)
+    const accessToken = signToken({ userId: user._id, sessionId: session._id  });
     // return user & tokens
     return {
         user: user.omitPassword(),
         refreshToken,
         accessToken,
     };
-
 }

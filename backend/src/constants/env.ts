@@ -15,3 +15,4 @@ export const USER_EMAIL = getEnv("USER_EMAIL");
 export const USER_PASSWORD = getEnv("USER_PASSWORD");
 export const JWT_REFRESH_KEY = getEnv("JWT_REFRESH_KEY");
 export const JWT_SECRET_KEY = getEnv("JWT_SECRET_KEY");
+export const NODE_ENV = getEnv("NODE_ENV");

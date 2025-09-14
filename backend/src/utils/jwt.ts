@@ -40,3 +40,12 @@ export const signToken = (
     const {secret, ...signOpts} = options || accessTokenSignOptions
     return jwt.sign(payload, secret, {...defaults, ...signOpts})
 }
+
+/*
+jwt.sign(
+  { userId: "123" },                   // payload
+  "super-secret-key",                  // secret
+  { algorithm: "HS256", expiresIn: "15m", audience: "my-app" } // options
+)
+
+*/

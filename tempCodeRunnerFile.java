@@ -11,13 +11,54 @@ public class a {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            String[] val = read.readLine().split(" ");
-            long n = Long.parseLong(val[0]);
-            long k = Long.parseLong(val[1]);
-            long x = Long.parseLong(val[2]);
-            long min_sum = (k * (k + 1)) / 2;
-            long max_sum = (k * ((2 * n) - k + 1))/ 2;
-            out.println(min_sum <= x && max_sum >= x ? "YES" : "NO");
+            char[][] grid = new char[8][8];
+            for (int i = 0; i < 8; i++) {
+                String s = read.readLine().trim();
+                for (int j = 0; j < 8; j++) {
+                    grid[i][j] = s.charAt(j);
+                }
+            }
+            int countR = 0;
+            int countB = 0;
+            for (int i = 0; i < grid[0].length; i++) {
+                countR = 0;
+                countB = 0;
+                for (int j = 0; j < grid.length; j++) {
+                    if (grid[j][i] == 'R') {
+                        countR++;
+                    } else if (grid[j][i] == 'B') {
+                        countB++;
+                    }
+                }
+                if (countB == 8 || countR == 8) {
+                    break;
+                }
+            }
+            if (countB == 8) {
+                out.println("B");
+            } else if (countR == 8) {
+                out.println("R");
+            } else {
+                for (int i = 0; i < grid.length; i++) {
+                    countR = 0;
+                    countB = 0;
+                    for (int j = 0; j < grid[0].length; j++) {
+                        if (grid[i][j] == 'R') {
+                            countR++;
+                        } else if (grid[i][j] == 'B') {
+                            countB++;
+                        }
+                    }
+                    if (countB == 8 || countR == 8) {
+                        break;
+                    }
+                }
+                if (countB == 8) {
+                    out.println("B");
+                } else if (countR == 8) {
+                    out.println("R");
+                }
+            }
         }
         out.flush();
         out.close();

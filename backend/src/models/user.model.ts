@@ -3,7 +3,7 @@ import { compareValue, hashValue } from "../utils/bcrypt";
 
 export interface UserDocument extends mongoose.Document {
     _id: mongoose.Types.ObjectId;
-    _v?: number,
+    _v?: number, // __v is a version key that Mongoose adds automatically to each document.
     name: string,
     email: string,
     password: string,
