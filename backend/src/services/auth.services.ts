@@ -1,4 +1,4 @@
-import { CONFLICT } from "../constants/http"
+import { CONFLICT, UNAUTHORIZED } from "../constants/http"
 import verificationCodeTypes from "../constants/verificationCodeTypes"
 import sessionModel from "../models/session.model"
 import userModel from "../models/user.model"
@@ -30,11 +30,11 @@ export const createAccount = async (data: createAccountParams) => {
         email: data.email,
         password: data.password,
     })
-    
+
     // send verification code +
     const verificationCode = await verificationCodeModel.create({
         userId: user._id,
-        email : user.email,
+        email: user.email,
         code: otp,
         type: verificationCodeTypes.EmailVerification,
         expiresAt: tenMinutesFromNow(),
@@ -55,12 +55,49 @@ export const createAccount = async (data: createAccountParams) => {
     })
 
     // sign access token && refresh token
-    const refreshToken = signToken({sessionId: session._id}, refreshTokenSignOptions)
-    const accessToken = signToken({ userId: user._id, sessionId: session._id  });
+    const refreshToken = signToken({ sessionId: session._id }, refreshTokenSignOptions)
+    const accessToken = signToken({ userId: user._id, sessionId: session._id });
     // return user & tokens
     return {
         user: user.omitPassword(),
         refreshToken,
         accessToken,
     };
+}
+
+type LoginParams = {
+    email: string,
+    password: string,
+    userAgent?: string,
+}
+
+export const loginUser = async ({ email, password, userAgent }: LoginParams) => {
+    // check the email is valid or invaild
+    const user = await userModel.findOne({ email });
+    appAssert(user, UNAUTHORIZED, "Invalid email or password");
+
+    // validate password from the request
+    const isValid = await user.comparePassword(password);
+    appAssert(isValid, UNAUTHORIZED, "Invalid email or password");
+
+    const session = await sessionModel.create({
+        userId: user._id,
+        userAgent,
+    });
+
+    const sessionInfo = { sessionId: session._id, }
+    //sign accessToken & refreshToken
+
+    const accessToken = signToken({
+        ...sessionInfo,
+        userId: user._id,
+    })
+    const refreshToken = signToken(sessionInfo, refreshTokenSignOptions)
+
+    // return user & Tokens
+    return {
+        user: user.omitPassword(),
+        accessToken,
+        refreshToken,
+    }
 }
