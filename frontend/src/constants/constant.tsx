@@ -156,3 +156,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
 };
 
 export default HamburgerMenu;
+
+
+import React from 'react';
+export const Spinner = () => {
+  return <div className="spinner"></div>;
+};
