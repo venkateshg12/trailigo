@@ -1,4 +1,5 @@
-import { CONFLICT, UNAUTHORIZED } from "../constants/http"
+import { Request, Response } from "express"
+import { CONFLICT, NOT_FOUND, UNAUTHORIZED } from "../constants/http"
 import verificationCodeTypes from "../constants/verificationCodeTypes"
 import sessionModel from "../models/session.model"
 import userModel from "../models/user.model"
@@ -8,6 +9,8 @@ import { tenMinutesFromNow } from "../utils/date"
 import { refreshTokenSignOptions, signToken } from "../utils/jwt"
 import { otp } from "../utils/otp"
 import { sendVerificationEmail } from "../utils/sendVerificationEmail"
+import jwt  from "jsonwebtoken"
+import { JWT_SECRET_KEY } from "../constants/env"
 
 type createAccountParams = {
     name: string,
@@ -89,8 +92,8 @@ export const loginUser = async ({ email, password, userAgent }: LoginParams) => 
     //sign accessToken & refreshToken
 
     const accessToken = signToken({
-        ...sessionInfo,
         userId: user._id,
+        ...sessionInfo,
     })
     const refreshToken = signToken(sessionInfo, refreshTokenSignOptions)
 
