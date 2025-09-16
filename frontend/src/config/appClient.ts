@@ -7,7 +7,7 @@ const options = {
 
 const API = axios.create(options);
 API.interceptors.response.use(
-  (response) => response.data,
+  (response) => response,
   (error) => {
     if (!error.response) {
       return Promise.reject({

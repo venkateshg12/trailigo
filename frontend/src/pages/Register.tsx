@@ -10,10 +10,11 @@ const Register = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const navigate = useNavigate();
+
   const { mutate: createAccount, isError, error } = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      navigate('/', {
+      navigate('/verify-email', {
         replace: true,
       })
     },

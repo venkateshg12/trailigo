@@ -46,6 +46,7 @@ userSchema.methods.omitPassword = function () {
     return user;
 }
 
+
 // mongoose.model() is a function provided by Mongoose to create a model based on a schema.
 // A model in Mongoose is the main way you interact with a MongoDB collection
 

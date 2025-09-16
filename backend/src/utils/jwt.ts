@@ -41,6 +41,17 @@ export const signToken = (
     return jwt.sign(payload, secret, {...defaults, ...signOpts})
 }
 
+export function verifyToken(token: string, secret?: string) {
+  const key = secret || JWT_SECRET_KEY;
+  try {
+    // Verify the token
+    const payload = jwt.verify(token, key);
+    return { payload };
+  } catch (err: any) {
+    return { error: err.message };
+  }
+}
+
 /*
 jwt.sign(
   { userId: "123" },                   // payload
