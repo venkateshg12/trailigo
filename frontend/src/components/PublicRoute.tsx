@@ -1,10 +1,9 @@
+import { Navigate, Outlet } from 'react-router-dom';
+import { useUserInfo } from '../hooks/useUserInfo'; // Adjust path if needed
 
-const PublicRoute = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const PublicOnlyRoute = () => {
+  const { data: user, } = useUserInfo();
+  return user ? <Navigate to="/create-trip" replace /> : <Outlet />;
+};
 
-export default PublicRoute;
+export default PublicOnlyRoute;
