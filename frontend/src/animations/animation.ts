@@ -40,7 +40,7 @@ export const registerAnimateCharsEffect = () => {
             timeline.set(splitText.chars, { opacity: 0 });
 
             timeline.from(splitText.chars, {
-                opacity: config.opacity || 1,
+                opacity: config.opacity || 0,
                 duration: config.duration || 0,
                 stagger: {
                     amount: config.staggerAmount || 0,

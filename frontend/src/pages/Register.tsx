@@ -1,34 +1,51 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../lib/api";
 import ImageAnimation from "@/components/ImageAnimation";
+import { LoadingDots } from "@/constants/constant";
+import queryClient from "@/config/queryClient";
 
 const Register = () => {
   const [email, setEmail] = useState<string>('');
-  const [name , setName] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [dot, setDot] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const { mutate: createAccount, isError, error } = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      navigate('/verify-email', {
-        replace: true,
-      })
+      navigate('/verify-email', {replace : true});
     },
-    onError: (err: any) => {
-      console.log("Mutation Error:", err);
+    onError: () => {
+      setDot(false); // Also a good idea to stop loading on error
     },
-  })
+  });
+
+  const isFormValid = () => {
+    return (
+      name.trim() !== '' &&
+      email.trim() !== '' &&
+      password.trim() !== '' &&
+      confirmPassword.trim() !== '' &&
+      password === confirmPassword
+    );
+  };
+  const handleClick = () => {
+    if (!isError && isFormValid()) {
+      setDot(true);
+    }
+  }
+
 
   return (
     <div className="relative">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-black/20">
         <ImageAnimation />
       </div>
-      <div className="min-h-screen absolute inset-0 flex items-center justify-center z-50">
+      <div className="min-h-screen absolute -my-7 md:0 px-4 inset-0 bg-black/10 flex items-center justify-center z-50">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -46,7 +63,7 @@ const Register = () => {
             type="string"
             placeholder="Name"
             className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={(e) => {setName(e.target.value)}}
+            onChange={(e) => { setName(e.target.value) }}
             required
           />
           <input
@@ -75,19 +92,20 @@ const Register = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                createAccount({name, email, password, confirmPassword })
+                createAccount({ name, email, password, confirmPassword })
               }
             }}
           />
           <button
             type="submit"
+            onClick={handleClick}
             className="font-kanit w-full px-4 py-3 cursor-pointer text-lg font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
           >
-            Register
+            {dot ? <LoadingDots /> : 'Register'}
           </button>
           <div className="flex font-kanit gap-2 justify-center">
             <span>Already have an account ?</span>{" "}
-            <Link to="/login" className="text-blue-700 hover:underline">
+            <Link to="/signin" className="text-blue-700 hover:underline">
               Sign In
             </Link>
           </div>

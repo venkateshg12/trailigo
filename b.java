@@ -10,18 +10,26 @@ public class b {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            int n = Integer.parseInt(read.readLine().trim());
             String[] val = read.readLine().split(" ");
+            int n= Integer.parseInt(val[0]);
+            int m = Integer.parseInt(val[1]);
+            String[] s = read.readLine().split(" ");
             int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = Integer.parseInt(val[i]);
+            int sum =  0;
+            for(int i = 0;i < n;i++){
+                arr[i] = Integer.parseInt(s[i]);
+                sum += arr[i];
             }
-            int res = arr[0];
-            for (int i = 1; i < n; i++) {
-                res &= arr[i];
+            for(int i = 0;i < n;i++) {
+                int p = m - arr[i];
+                int total = 0;
+                for(int j = 0;j < n;j++) {
+                    int q = (p + arr[j]) % m;
+                    total += q;
+                }
+                sum =  Math.min(sum , total);
             }
-            out.println(res);
-
+            out.println(sum);
         }
         out.flush();
         out.close();

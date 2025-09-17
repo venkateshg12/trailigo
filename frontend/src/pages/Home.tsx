@@ -21,8 +21,8 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 const Home = () => {
     useGSAP(() => {
         registerAnimateCharsEffect();
-        gsap.effects.animateChars(".char7", { duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
-        gsap.effects.animateChars(".char8", { duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char7", { opacity : 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char8", { opacity : 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
         gsap.effects.animateChars(".char3", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
         gsap.effects.animateChars(".char4", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
     }, []);

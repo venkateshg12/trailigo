@@ -24,7 +24,7 @@ const ImageAnimation = () => {
     // Animate current slide out
     const animateSlideOut = (el: HTMLElement | null) => {
         if (!el) return;
-        gsap.to(el, { opacity: 0, scale: 0.95, duration: 0.6, ease: "power2.inOut", });
+        gsap.to(el, { opacity: 0, scale: 0.95, duration: 0.9, ease: "power2.inOut", });
     };
 
     // Move to next slide

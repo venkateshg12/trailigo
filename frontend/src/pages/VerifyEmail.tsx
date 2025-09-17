@@ -1,7 +1,8 @@
 import ImageAnimation from "@/components/ImageAnimation";
-import { Spinner } from "@/constants/constant";
-import { fetchUser, onSubmit } from "@/lib/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Spinner, Verified } from "@/constants/constant";
+import { useUserInfo } from "@/hooks/useUserInfo";
+import { onSubmit } from "@/lib/api";
+import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,24 +15,16 @@ interface ApiError {
 const VerifyEmail = () => {
     const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const [isVerified, setIsVerified] = useState<boolean>(false);
     const navigate = useNavigate();
 
 
-    const { data: user, isLoading: isUserLoading, isError: isUserError, error: userError } = useQuery({
-        queryKey: ["user"],
-        queryFn: fetchUser,
-        refetchOnWindowFocus: false,
-        refetchOnMount: true,
-        staleTime: 5 * 60 * 1000,
-    })
-
+    const { data: user, isLoading: isUserLoading, isError: isUserError, error: userError } = useUserInfo();
 
     const { mutate: onOtpSubmit, isError: isMutationError, error: mutationError } = useMutation({
         mutationFn: onSubmit,
         onSuccess: () => {
-            navigate("/create-trip", {
-                replace: true,
-            })
+            setIsVerified(true);
         },
         onError: (err: any) => {
             console.log(err);
@@ -89,18 +82,33 @@ const VerifyEmail = () => {
         }
     };
 
+    useEffect(() => {
+        if (isVerified) {
+            const timer = setTimeout(() => {
+                navigate("/create-trip", { replace: true });
+            }, 3000);
+
+            // Cleanup function to clear the timer if the component unmounts
+            return () => clearTimeout(timer);
+        }
+    }, [isVerified, navigate]);
+
+    if (isVerified) {
+        return <Verified />
+    }
+
     const displayError = isUserError ? userError : mutationError;
     const isDisplayingError = isUserError || isMutationError;
 
-    return (
+    return  (
         <div>
             <div className="relative">
                 <div className="absolute inset-0">
                     <ImageAnimation />
                 </div>
-                <div className="min-h-screen absolute inset-0 flex items-center justify-center z-50">
+                <div className="min-h-screen absolute inset-0 flex bg-black/50 backdrop-blur-sm items-center  justify-center px-4 z-50">
                     <div
-                        className="bg-white  p-8 rounded-xl min-w-[10rem] min-h-[10rem] mx-1 shadow-lg w-[100%] max-w-lg flex flex-col gap-4"
+                        className="bg-white  p-8 rounded-xl min-h-[14rem] -mt-[10rem] md:min-w-[10rem] md:min-h-[10rem] md:mx-1  shadow-lg w-[100%] max-w-lg flex flex-col gap-4"
                     >
                         <div>
                             <div className="text-center font-freight font-bold text-[3rem]">Enter OTP</div>
@@ -111,7 +119,7 @@ const VerifyEmail = () => {
                                 {(displayError as AxiosError<ApiError>)?.response?.data?.message || displayError?.message}
                             </div>
                         )}
-                        <div className="flex justify-center flex-row gap-4">
+                        <div className="grid grid-cols-6 md:gap-4 gap-2 ">
                             {
                                 otp.map((value, index) => {
                                     return (
@@ -125,7 +133,7 @@ const VerifyEmail = () => {
                                             onChange={(e) => handleChange(index, e)}
                                             onClick={() => handleClick(index)}
                                             onKeyDown={(e) => handleKeyDown(index, e)}
-                                            className="border-2 border-gray-400 focus:border-3 rounded-2xl focus:border-black w-[4rem] h-[4rem] text-center text-[2rem]"
+                                            className="border-2 border-gray-400 focus:border-3 rounded-2xl focus:border-black max-w-[4rem] max-h-[4rem] aspect-square  text-center text-[2rem]"
                                         >
                                         </input>
                                     )

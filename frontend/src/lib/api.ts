@@ -13,7 +13,10 @@ export interface VerificationData {
     userId: string,
     code: string,
 }
-
+export interface loginData {
+    email : string,
+    password : string,
+}
 export const register = async (data: RegisterData) => {
     return API.post("/auth/register", data);
 };
@@ -21,6 +24,10 @@ export const register = async (data: RegisterData) => {
 
 export const onSubmit = async (data: VerificationData) => {
     return API.post("/auth/verify-email", data);
+}
+
+export const login = async(data : loginData) => {
+    return API.post("/auth/login", data);
 }
 
 type User = {
