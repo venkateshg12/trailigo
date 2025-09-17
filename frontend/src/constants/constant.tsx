@@ -48,47 +48,47 @@ export const HomeInfoOne = [
     {
         details: homeInfoOneOne,
         image: image11,
-        className : "md:ml-auto"
-        
+        className: "md:ml-auto"
+
     },
     {
         details: homeInfoOneTwo,
         image: image12,
-        className : "md:ml-auto"
+        className: "md:ml-auto"
     },
-    
+
     {
         details: homeInfoOneThree,
         image: image13,
-        className : "md:ml-auto"
+        className: "md:ml-auto"
     }
 ]
 
 
 export const HomeInfoTwo = [
-     {
-        details : homeInfoTwoOne,
-        image : image21,
-        className : "md:mr-auto",
+    {
+        details: homeInfoTwoOne,
+        image: image21,
+        className: "md:mr-auto",
     },
-     {
-        details : homeInfoTwoTwo,
-        image : image22,
-        className : "md:mr-auto",
+    {
+        details: homeInfoTwoTwo,
+        image: image22,
+        className: "md:mr-auto",
     },
-     {
-        details : homeInfoTwoThree,
-        image : image23,
-        className : "md:mr-auto",
+    {
+        details: homeInfoTwoThree,
+        image: image23,
+        className: "md:mr-auto",
     }
 ]
 
 export const details2 = "Take the stress out of trip planning. Our intelligent platform helps you manage flights, hotels, bookings, and even travel tips—everything you need, all in one convenient spot.";
 
 export interface User {
-  email: string;
-  verified: boolean;
-  createdAt: string;
+    email: string;
+    verified: boolean;
+    createdAt: string;
 }
 
 
@@ -159,6 +159,44 @@ export default HamburgerMenu;
 
 
 import React from 'react';
+import ImageAnimation from "@/components/ImageAnimation";
 export const Spinner = () => {
-  return <div className="spinner"></div>;
+    return <div className="spinner"></div>;
 };
+
+
+export const LoadingDots = () => {
+
+    return (
+        <>
+            <div className="flex space-x-1 justify-center items-center">
+                <div className='dotAnimation1 text-white rounded-full animate-pulse text-3xl'>•</div>
+                <div className='dotAnimation2 text-white rounded-full animate-pulse text-3xl'>•</div>
+                <div className='dotAnimation3 text-white rounded-full animate-pulse text-3xl'>•</div>
+                <div className='dotAnimation4 text-white rounded-full animate-pulse text-3xl'>•</div>
+            </div>
+        </>
+    )
+
+}
+
+export const Verified = () => {
+    return (
+        <div className="relative">
+            <div className="absolute inset-0 ">
+                <ImageAnimation />
+            </div>
+            <div className="min-h-screen absolute inset-0 bg-black/20 backdrop-blur-md flex items-center justify-center z-50">
+                <div className="bg-white p-8 rounded-xl text-center shadow-lg">
+                    <div className="flex justify-center items-center">
+                        <svg className="mx-auto h-10 w-10 text-green-500" fill="none" viewBox="0 0 34 10" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h2 className="mt-4 text-2xl font-bold font-kanit">Email Verified!</h2>
+                    </div>
+                    <p className="mt-2 text-gray-600">Redirecting you now...</p>
+                </div>
+            </div>
+        </div>
+    );
+}
