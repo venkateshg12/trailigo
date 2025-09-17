@@ -1,3 +1,6 @@
+import ImageAnimation from "@/components/ImageAnimation";
+import type { LoadingDots } from "@/constants/constant";
+import { login } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,18 +13,21 @@ const SignIn = () => {
   const { mutate: signIn, isPending, isError, error } = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      navigate('/', {
+      navigate('/create-trip', {
         replace: true,
       })
     },
-    onError: (err: any) => {
-      console.log("Mutation Error:", err);
-    },
+    onError: (err) => {
+      console.log(err)
+    }
   })
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="absolute inset-0 bg-black/20">
+        <ImageAnimation />
+      </div>
+      <div className="min-h-screen absolute inset-0 flex px-4 items-center justify-center bg-black/50  z-40">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -30,7 +36,7 @@ const SignIn = () => {
           className="bg-white p-8 rounded-xl shadow-lg w-[100%] max-w-lg flex flex-col gap-4"
         >
           <h2 className="text-2xl font-bold text-center">Login</h2>
-          {isError && (
+          {/* {isError && (
             <div className="text-center text-red-600 text-sm">
               {Array.isArray(error?.errors)
                 ? error.errors.map((err: any, idx: number) => (
@@ -38,7 +44,7 @@ const SignIn = () => {
                 ))
                 : error?.message || "Something went wrong"}
             </div>
-          )}
+          )} */}
 
           <input
             type="email"
@@ -72,7 +78,7 @@ const SignIn = () => {
             disabled={isPending}
             className="w-full px-4 py-3 cursor-pointer text-lg font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
           >
-            {isPending ? 'Logging in' : 'login'}
+            {isPending ? <LoadingDots /> : 'login'}
           </button>
           <div className="flex gap-2 justify-center">
             <span>Don't have an account ?</span>{" "}
