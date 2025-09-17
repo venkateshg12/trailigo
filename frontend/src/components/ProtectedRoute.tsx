@@ -1,16 +1,9 @@
+import { useUserInfo } from '@/hooks/useUserInfo';
+import { Navigate, Outlet } from 'react-router-dom';
 
-import type { ReactNode } from "react";
-
-interface PublicRouteProps {
-  children: ReactNode;
-}
-
-const ProtectedRoute = ({children} : PublicRouteProps) => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const ProtectedRoute = () => {
+  const { data: user } = useUserInfo();
+  return user?.verified ? <Outlet /> : <Navigate to="/" replace />;
+};
 
 export default ProtectedRoute;
