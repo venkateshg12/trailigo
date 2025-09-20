@@ -30,6 +30,10 @@ export const login = async(data : loginData) => {
     return API.post("/auth/login", data);
 }
 
+export const logOut = async() =>{
+    return API.post("/auth/logout");
+}
+
 type User = {
     id : string,
     email : string,
@@ -47,4 +51,8 @@ export const fetchUser = async ():Promise<User> => {
         console.log("Error fetching user:", err);
         throw err; // still let React Query know an error happened
     }
+}
+
+export const googleLogin = async() => {
+    return API.get("/auth/google");
 }

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { googleLogin, register } from "../lib/api";
+import {  register } from "../lib/api";
 import ImageAnimation from "@/components/ImageAnimation";
-import { LoadingDots } from "@/constants/constant";
+import { handleGoogleLogin, LoadingDots } from "@/constants/constant";
 import google from "../assets/google.png";
 const Register = () => {
   const [email, setEmail] = useState<string>('');
@@ -23,12 +23,6 @@ const Register = () => {
     },
   });
 
-  const {mutate : googleAuth, isError:isGoogleError, error:GoogleError} = useMutation ({
-    mutationFn : googleLogin,
-    onSuccess : () =>{
-      navigate('/create-trip', {replace : true});
-    }
-  })
 
   const isFormValid = () => {
     return (
@@ -45,6 +39,7 @@ const Register = () => {
     }
   }
 
+ 
 
   return (
     <div className="relative">
@@ -116,13 +111,13 @@ const Register = () => {
             </Link>
           </div>
           <div className="text-center text-gray-500"><span>Or</span></div>
-          <a
-            href="http://localhost:3000/auth/google"
+          <button
+          onClick={handleGoogleLogin}
             className="font-kanit w-full text-center px-4 py-1 cursor-pointer flex items-center justify-center text-lg font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
             >
               <img src={google} alt="google png" className="w-16 h-12" />
               <span >Continue with google</span>
-            </a>
+            </button>
         </form>
       </div>
     </div >

@@ -8,7 +8,11 @@ import catchError from "./utils/catchError";
 import authRoutes from "./routes/auth.routes";
 import errorHandler from "./utils/errorHandler";
 import connectToMongoDB from "./config/db";
+import session from "express-session" //  npm install express-session @types/express-session
+import passport from "passport" // npm install --save @types/passport-google-oauth20
 import mongoose from "mongoose";
+import "./config/passport";
+
 const app = express();
 
 // allows express server to parse json request bodies.
@@ -25,6 +29,8 @@ app.use(cors({
     credentials: true,
 }))
 
+
+app.use(passport.initialize());
 
 // which lets your backend read cookies sent by the client (like the browser).
 app.use(cookieParser());

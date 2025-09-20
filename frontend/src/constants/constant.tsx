@@ -200,3 +200,7 @@ export const Verified = () => {
         </div>
     );
 }
+
+export const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:3000/auth/google';
+}

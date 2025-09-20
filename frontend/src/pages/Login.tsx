@@ -16,9 +16,6 @@ const SignIn = () => {
       navigate('/create-trip', {
         replace: true,
       })
-    },
-    onError: (err) => {
-      console.log(err)
     }
   })
 

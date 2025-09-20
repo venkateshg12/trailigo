@@ -11,13 +11,43 @@ public class a {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            String[] val = read.readLine().split(" ");
-            long n = Long.parseLong(val[0]);
-            long k = Long.parseLong(val[1]);
-            long x = Long.parseLong(val[2]);
-            long min_sum = (k * (k + 1)) / 2;
-            long max_sum = (k * ((2 * n) - k + 1))/ 2;
-            out.println(min_sum <= x && max_sum >= x ? "YES" : "NO");
+            // String[] val = read.readLine().split(" ");
+            int n = Integer.parseInt(read.readLine().trim());
+            int[] arr = new int[2 * n];
+            int p = n;
+            for (int i = (2 * n) - 1; i >= 0 && p >= 2; i--) {
+                if (i == (2 * n) - 1) {
+                    arr[i] = p;
+                    arr[i - p] = p;
+                    p--;
+                } else {
+                    if (arr[i - p] != 0) {
+                        int c = 2;
+                        while ((i - (p * c)) >= 0) {
+                            if (arr[i - (p * c)] == 0) {
+                                arr[i] = p;
+                                arr[i - (p * c)] = p;
+                                p--;
+                                break;
+                            } else {
+                                c++;
+                            }
+                        }
+                    } else {
+                        arr[i] = p;
+                        arr[i - p] = p;
+                        p--;
+                    }
+                }
+            }
+            for (int i = 0; i < 2 * n; i++) {
+                if (arr[i] == 0) {
+                    out.print("1" + " ");
+                } else {
+                    out.print(arr[i] + " ");
+                }
+            }
+            out.println();
         }
         out.flush();
         out.close();
