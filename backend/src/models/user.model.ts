@@ -6,20 +6,40 @@ export interface UserDocument extends mongoose.Document {
     _v?: number, // __v is a version key that Mongoose adds automatically to each document.
     name: string,
     email: string,
-    password: string,
+    password?: string,
     verified: boolean,
+    googleId?: string,
+    avatar?: string,
+    authProvider ? : 'email' | 'google',
     createdAt: Date,
     updatedAt: Date,
     comparePassword(val: string): Promise<boolean>;
-    omitPassword(): Pick<UserDocument, "_id" | "name" | "email" | "password" | "verified" | "createdAt" | "updatedAt" | "_v">;
+    omitPassword(): Pick<UserDocument, "_id" | "name" | "email" | "password" | "verified" | "createdAt" | "updatedAt" | "_v" | "googleId" | "authProvider" | "avatar">;
 }
 
 const userSchema = new mongoose.Schema<UserDocument>(
     {
         name: { type: String, required: true },
         email: { type: String, required: true },
-        password: { type: String, required: true },
+        password: { 
+            type: String, 
+            required: function(this: UserDocument) {
+                return this.authProvider === 'email'
+            }
+         },
+         avatar : {type: String, default : null},
         verified: { type: Boolean, required: true, default: false },
+        googleId: {
+            type : String,
+            sparse : true, // Allow null values but create unique index for non-null values
+            unique : true
+        },
+        authProvider : {
+            type : String,
+            enum : ['email', 'google'],
+            required : true,
+            default : 'email'
+        }
     },
     {
         timestamps: true,
@@ -29,14 +49,17 @@ const userSchema = new mongoose.Schema<UserDocument>(
 // .pre is a mongoose middleware hook which runs before the document will be saved into mongoDB
 
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) { 
+    if (!this.isModified("password") || this.authProvider === 'google') {
         return next(); // Skip hashing if password wasn't changed.
     }
-    this.password = await hashValue(this.password);
-    next(); // I am done continue saving.
+    if(this.password){
+        this.password = await hashValue(this.password);
+    }
+    next(); // I am done, continue saving.
 })
 
 userSchema.methods.comparePassword = async function (val: string) {
+    if(!this.password) return false;
     return compareValue(val, this.password);
 }
 
