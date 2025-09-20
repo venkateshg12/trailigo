@@ -6,11 +6,14 @@ import { verifyOTP } from "../services/verifyOtp.services";
 import appAssert from "../utils/appAssert";
 import catchError from "../utils/catchError"
 import { clearAuthCookies, setAuthCookies } from "../utils/cookies";
-import { verifyToken } from "../utils/jwt";
+import { refreshTokenSignOptions, signToken, verifyToken } from "../utils/jwt";
 import { loginSchema, registerSchema } from "./auth.schema"
 import userModel from "../models/user.model";
 import AppError from "../utils/appError";
 import mongoose from "mongoose";
+import passport from "passport";
+import { NextFunction, Request, Response } from "express";
+import { APP_ORIGIN } from "../constants/env";
 
 
 export const registerHandler = catchError(async (req, res) => {
@@ -61,7 +64,7 @@ export const logoutHandler = catchError(async (req, res) => {
     })
 })
 
-export const authMiddleWare = catchError(async (req, res) => {
+export const getUserInfo = catchError(async (req, res) => {
     const token = req.cookies.accessToken;
     console.log("token: ", token);
     // appAssert(!token, UNAUTHORIZED, "Unauthorized User");
@@ -82,3 +85,27 @@ export const authMiddleWare = catchError(async (req, res) => {
         return res.status(OK).json(userData);
     }
 })
+
+export const googleAuthInitiate = passport.authenticate('google', { scope: ['profile', 'email'] });
+
+export const googleAuthCallback = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate('google', { session: false }, async (err: any, user: any) => {
+        if (err || !user) {
+            return res.redirect(`${APP_ORIGIN}/login?error=oauth_failed`);
+        }
+        try {
+            const session = await sessionModel.create({
+                userId: user._id,
+                userAgent: req.headers['user-agent'],
+            })
+            // sign access token && refresh token
+            const refreshToken = signToken({ sessionId: session._id }, refreshTokenSignOptions)
+            const accessToken = signToken({ userId: user._id, sessionId: session._id });
+
+            setAuthCookies({ res, accessToken, refreshToken });
+            return res.redirect(`${APP_ORIGIN}/create-trip`);
+        } catch (error) {
+            return res.redirect(`${APP_ORIGIN}/?error=session_failed`);
+        }
+    })(req, res, next);
+};
