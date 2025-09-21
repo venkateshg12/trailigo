@@ -1,6 +1,6 @@
 
-import { useRef } from "react";
-import { details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo } from "@/constants/constant";
+import { useEffect, useRef, useState } from "react";
+import { details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo, LoadingSpinnerWithProgress } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
@@ -14,20 +14,32 @@ import ImageAnimation from "@/components/ImageAnimation";
 import SplitText from "gsap/SplitText";
 import ScrollTrigger from "gsap/ScrollTrigger"
 import { registerAnimateCharsEffect } from "@/animations/animation";
+import { useImagePreloader } from "@/hooks/useImageLoader";
 
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 const Home = () => {
+    const [animationsReady, setAnimationsReady] = useState<boolean>(false);
+    const titleRef = useRef<HTMLDivElement | null>(null);
+    const imagesSources = [
+        desImage1,
+        desImage2,
+        ...HomeInfoOne.map(item => item.image),
+        ...HomeInfoTwo.map(item => item.image),
+    ];
+    const { imagesLoaded, loadingProgress } = useImagePreloader(imagesSources);
     useGSAP(() => {
+        if (!imagesLoaded || !animationsReady) return;
         registerAnimateCharsEffect();
-        gsap.effects.animateChars(".char7", { opacity : 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
-        gsap.effects.animateChars(".char8", { opacity : 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char7", { opacity: 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
+        gsap.effects.animateChars(".char8", { opacity: 0, duration: 0.5, staggerAmount: 0.5, staggerFrom: "random", ease: "power1.out", });
         gsap.effects.animateChars(".char3", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
         gsap.effects.animateChars(".char4", { opacity: 0, x: "1em", duration: 1.5, ease: "power4.out", staggerAmount: 0.8, })
-    }, []);
-    const titleRef = useRef<HTMLDivElement | null>(null);
+    }, [imagesLoaded, animationsReady]);
+
     useGSAP(() => {
+        if (!imagesLoaded || !animationsReady || !titleRef.current) return;
         const split = new SplitText(titleRef.current, {
             type: "chars",
         });
@@ -35,7 +47,22 @@ const Home = () => {
         return () => {
             split.revert();
         };
-    }, []);
+    }, [imagesLoaded, animationsReady]);
+
+    // set animations ready after images load delay for smooth transitions
+     useEffect(() => {
+        if (imagesLoaded) {
+            setTimeout(() => {
+                setAnimationsReady(true);
+                console.log('All images loaded, animations ready');
+            }, 500); 
+        }
+    }, [imagesLoaded]);
+
+    if (!imagesLoaded) {
+        return <LoadingSpinnerWithProgress progress={loadingProgress} />;
+    }
+    
     return (
         <>
             <div className="relative w-full h-screen overflow-hidden">
