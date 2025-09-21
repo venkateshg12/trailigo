@@ -19,7 +19,6 @@ export const image23 = "https://images.pexels.com/photos/33210214/pexels-photo-3
 export const image3 = "https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 export const image4 = "https://plus.unsplash.com/premium_photo-1673697239633-5f5b91092bd8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-
 export const address = [
     { ad1: "Bali", ad2: "Indonesia" },
     { ad1: "Burj Al Arab", ad2: "Dubai" },
@@ -27,6 +26,39 @@ export const address = [
     { ad1: "Reinefjorden", ad2: "Norway" },
     { ad1: "Lake Lucerne", ad2: "Switzerland" },
 ];
+
+export const mainPageImageContent = [
+    {
+        image: "https://plus.unsplash.com/premium_photo-1697729438401-fcb4ff66d9a8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg: "https://images.unsplash.com/photo-1597735881932-d9664c9bbcea?q=80&w=683&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "Kerala",
+        about: "Kerala is a state on the southwestern coast of India, along the Arabian Sea. It’s famous for its natural beauty, rich culture, and high literacy rate."
+    },
+    {
+        image: "https://images.unsplash.com/photo-1620562423895-ad4924643d43?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg: "https://images.unsplash.com/photo-1514970746-d4a465d514d0?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "Switzerland",
+        about: "Switzerland is a landlocked country in Central Europe, famous for its breathtaking landscapes, high living standards, and neutrality in world politics."
+    },
+    {
+        image: "https://images.unsplash.com/photo-1542640244-7e672d6cef4e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg: "https://images.unsplash.com/photo-1601823984263-b87b59798b70?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "Darjeeling",
+        about: "Darjeeling is a hill station in West Bengal, India, located in the Lesser Himalayas at about 2,000 meters (6,700 ft) above sea level. It’s famous for its tea, views of the Kanchenjunga (the world’s third-highest mountain), and colonial charm."
+    },
+    {
+        image : "https://images.unsplash.com/photo-1622308644420-b20142dc993c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg : "https://images.unsplash.com/photo-1603755962670-a6f92be76d5e?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "Japan",
+        about: "An island nation in East Asia, made up of 4 main islands — Honshu, Hokkaido, Kyushu, and Shikoku — plus thousands of smaller ones.Surrounded by the Pacific Ocean, with mountains (like Mt. Fuji), forests, hot springs, and bustling cities."
+    },
+    { 
+        image : "https://images.unsplash.com/photo-1473951574080-01fe45ec8643?q=80&w=1204&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg : "https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "france", 
+        about: "France 🇫🇷 is a country in Western Europe known for its rich history, art, culture, and fashion. Its capital, Paris, is famous for landmarks like the Eiffel Tower and the Louvre Museum. France is celebrated for its cuisine, wine, and romantic charm" 
+    },
+]
 
 
 export const homeInfoOneOne = "Design your dream trip effortlessly with Trip Planner AI. Our intelligent system curates the ideal travel itinerary by blending your favorite attractions, restaurants, and accommodations — all tailored to match your style and schedule."
@@ -206,43 +238,43 @@ export const handleGoogleLogin = () => {
 }
 
 export const LoadingSpinnerWithProgress = ({ progress }: { progress: number }) => (
-  <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
-    <div className="flex flex-col items-center gap-6">
-      {/* Main Spinner */}
-      <div className="relative">
-        <div className="w-20 h-20 border-4 border-white/20 rounded-full"></div>
-        <div 
-          className="absolute top-0 left-0 w-20 h-20 border-4 border-t-white border-r-white/60 rounded-full animate-spin"
-          style={{
-            animationDuration: '1s',
-          }}
-        ></div>
-      </div>
+    <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+            {/* Main Spinner */}
+            <div className="relative">
+                <div className="w-20 h-20 border-4 border-white/20 rounded-full"></div>
+                <div
+                    className="absolute top-0 left-0 w-20 h-20 border-4 border-t-white border-r-white/60 rounded-full animate-spin"
+                    style={{
+                        animationDuration: '1s',
+                    }}
+                ></div>
+            </div>
 
-      {/* Progress Bar */}
-      <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
-        <div 
-          className="h-full bg-gradient-to-r from-blue-500 to-white rounded-full transition-all duration-300 ease-out"
-          style={{ width: `${progress}%` }}
-        ></div>
-      </div>
+            {/* Progress Bar */}
+            <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+                <div
+                    className="h-full bg-gradient-to-r from-blue-500 to-white rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${progress}%` }}
+                ></div>
+            </div>
 
-      {/* Loading Text */}
-      <div className="text-center">
-        <div className="text-white font-montreal text-xl mb-2">
-          Loading Experience... {progress}%
+            {/* Loading Text */}
+            <div className="text-center">
+                <div className="text-white font-montreal text-xl mb-2">
+                    Loading Experience... {progress}%
+                </div>
+                <div className="text-white/60 font-montreal text-sm">
+                    {progress < 50 ? 'Preparing your journey' :
+                        progress < 80 ? 'Loading destinations' :
+                            'Lets go...'}
+                </div>
+            </div>
+
+            {/* Trailigo Brand */}
+            <div className="absolute bottom-10">
+                <h2 className="text-white/40 font-tumbler text-2xl tracking-widest">Trailigo</h2>
+            </div>
         </div>
-        <div className="text-white/60 font-montreal text-sm">
-          {progress < 50 ? 'Preparing your journey' : 
-           progress < 80 ? 'Loading destinations' : 
-           'Lets go...'}
-        </div>
-      </div>
-
-      {/* Trailigo Brand */}
-      <div className="absolute bottom-10">
-        <h2 className="text-white/40 font-tumbler text-2xl tracking-widest">Trailigo</h2>
-      </div>
     </div>
-  </div>
 );
