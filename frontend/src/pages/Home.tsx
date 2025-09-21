@@ -40,29 +40,38 @@ const Home = () => {
 
     useGSAP(() => {
         if (!imagesLoaded || !animationsReady || !titleRef.current) return;
+        gsap.set(titleRef.current, { visibility: "hidden" });
         const split = new SplitText(titleRef.current, {
             type: "chars",
         });
-        gsap.from(split.chars, { duration: 0.3, opacity: 0, stagger: 0.2, ease: "power3.out", });
+        gsap.set(split.chars, { autoAlpha: 0 });
+        gsap.set(titleRef.current, { visibility: "visible" });
+
+        gsap.to(split.chars, {
+            duration: 0.5,
+            autoAlpha: 1,
+            stagger: 0.1,
+            ease: "power2.out",
+        });
         return () => {
             split.revert();
         };
     }, [imagesLoaded, animationsReady]);
 
     // set animations ready after images load delay for smooth transitions
-     useEffect(() => {
+    useEffect(() => {
         if (imagesLoaded) {
             setTimeout(() => {
                 setAnimationsReady(true);
                 console.log('All images loaded, animations ready');
-            }, 500); 
+            }, 100);
         }
     }, [imagesLoaded]);
 
     if (!imagesLoaded) {
         return <LoadingSpinnerWithProgress progress={loadingProgress} />;
     }
-    
+
     return (
         <>
             <div className="relative w-full h-screen overflow-hidden">
@@ -70,8 +79,8 @@ const Home = () => {
                     <ImageAnimation />
                 </div>
                 <div className="absolute inset-0 z-50 px-[1rem] flex flex-col items-center bg-black/50 md:-mt-[12rem] justify-center">
-                    <h1 ref={titleRef} className="text-white max-[500px]:text-[3rem]  min-[500px]:text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
-                    <span className="text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
+                    <h1 ref={titleRef}  style={{ visibility: 'hidden' }} className="text-white   max-[500px]:text-[3rem]  min-[500px]:text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
+                    <span className="char-7 text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal ">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
                     <Link to="/signin">
                         <button className="px-3 py-1 bg-red-500 text-white rounded-2xl my-3 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
                     </Link>

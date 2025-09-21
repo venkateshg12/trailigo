@@ -11,43 +11,30 @@ public class a {
         PrintWriter out = new PrintWriter(System.out);
         int t = Integer.parseInt(read.readLine().trim());
         while (t-- > 0) {
-            // String[] val = read.readLine().split(" ");
             int n = Integer.parseInt(read.readLine().trim());
-            int[] arr = new int[2 * n];
-            int p = n;
-            for (int i = (2 * n) - 1; i >= 0 && p >= 2; i--) {
-                if (i == (2 * n) - 1) {
-                    arr[i] = p;
-                    arr[i - p] = p;
-                    p--;
-                } else {
-                    if (arr[i - p] != 0) {
-                        int c = 2;
-                        while ((i - (p * c)) >= 0) {
-                            if (arr[i - (p * c)] == 0) {
-                                arr[i] = p;
-                                arr[i - (p * c)] = p;
-                                p--;
-                                break;
-                            } else {
-                                c++;
-                            }
-                        }
-                    } else {
-                        arr[i] = p;
-                        arr[i - p] = p;
-                        p--;
-                    }
+            String[] val = read.readLine().split(" ");
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = Integer.parseInt(val[i]);
+            }
+            int[][] a = new int[101][101];
+            for (int i = 0; i < n; i++) {
+                a[arr[i]][0] = arr[i];
+                a[arr[i]][1]++;
+            }
+            List<int[]> freqList = new ArrayList<>();
+            for (int i = 0; i < a.length; i++) {
+                if (a[i][1] > 0) { 
+                    freqList.add(new int[] { a[i][0], a[i][1] });
                 }
             }
-            for (int i = 0; i < 2 * n; i++) {
-                if (arr[i] == 0) {
-                    out.print("1" + " ");
-                } else {
-                    out.print(arr[i] + " ");
-                }
+            freqList.sort((x, y) -> Integer.compare(y[1], x[1]));
+            int max = 0;
+            for(int i = 0;i < freqList.size();i++) {
+                int tot = freqList.get(i)[1] * (i + 1);
+                max = Math.max(tot, max);
             }
-            out.println();
+            out.println(max);
         }
         out.flush();
         out.close();
