@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: "Montreal";
-  src: url("../public/fonts/NeueMontreal-Regular.ttf")format("truetype");
+  src: url("../fonts/NeueMontreal-Regular.ttf")format("truetype");
 }
 
 .font-montreal {
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "retro";
-  src: url("../public/fonts/RETROACTIVE.ttf")format("truetype");
+  src: url("../fonts/RETROACTIVE.ttf")format("truetype");
 }
 
 .font-retro {
@@ -21,7 +21,7 @@
 
 @font-face {
   font-family: "tumbler";
-  src: url("../public/fonts/TumblerGlass.ttf")format("truetype");
+  src: url("../fonts/TumblerGlass.ttf")format("truetype");
 }
 
 .font-tumbler {
@@ -30,7 +30,7 @@
 
 @font-face {
   font-family: "freight";
-  src: url("../public/fonts/FreightBigProLight-Regular.ttf")format("truetype");
+  src: url("../fonts/FreightBigProLight-Regular.ttf")format("truetype");
 }
 
 .font-freight {
