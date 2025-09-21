@@ -204,3 +204,45 @@ export const Verified = () => {
 export const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:3000/auth/google';
 }
+
+export const LoadingSpinnerWithProgress = ({ progress }: { progress: number }) => (
+  <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
+    <div className="flex flex-col items-center gap-6">
+      {/* Main Spinner */}
+      <div className="relative">
+        <div className="w-20 h-20 border-4 border-white/20 rounded-full"></div>
+        <div 
+          className="absolute top-0 left-0 w-20 h-20 border-4 border-t-white border-r-white/60 rounded-full animate-spin"
+          style={{
+            animationDuration: '1s',
+          }}
+        ></div>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+        <div 
+          className="h-full bg-gradient-to-r from-blue-500 to-white rounded-full transition-all duration-300 ease-out"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+
+      {/* Loading Text */}
+      <div className="text-center">
+        <div className="text-white font-montreal text-xl mb-2">
+          Loading Experience... {progress}%
+        </div>
+        <div className="text-white/60 font-montreal text-sm">
+          {progress < 50 ? 'Preparing your journey' : 
+           progress < 80 ? 'Loading destinations' : 
+           'Lets go...'}
+        </div>
+      </div>
+
+      {/* Trailigo Brand */}
+      <div className="absolute bottom-10">
+        <h2 className="text-white/40 font-tumbler text-2xl tracking-widest">Trailigo</h2>
+      </div>
+    </div>
+  </div>
+);
