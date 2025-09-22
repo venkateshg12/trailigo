@@ -1,7 +1,7 @@
 //  npm install jsonwebtoken  
 // npm install --save-dev @types/jsonwebtoken
 
-import jwt, { SignOptions } from "jsonwebtoken";
+import jwt, { SignOptions, VerifyOptions } from "jsonwebtoken";
 import { JWT_REFRESH_KEY, JWT_SECRET_KEY } from "../constants/env"
 import Audience from "./audience";
 import { SessionDocument } from "../models/session.model";
@@ -41,7 +41,7 @@ export const signToken = (
     return jwt.sign(payload, secret, {...defaults, ...signOpts})
 }
 
-export function verifyToken(token: string, secret?: string) {
+/*export function verifyToken(token: string, secret?: string) {
   const key = secret || JWT_SECRET_KEY;
   try {
     // Verify the token
@@ -50,6 +50,26 @@ export function verifyToken(token: string, secret?: string) {
   } catch (err: any) {
     return { error: err.message };
   }
+}*/
+
+export const verifyToken = <TPayload extends object = AccessTokenPayload>(token: string,
+    options?: VerifyOptions &
+    { secret?: string }
+) => {
+    const { secret = JWT_SECRET_KEY, ...verifyOpts } = options || {}
+    try {
+        const payload = jwt.verify(token, secret, {
+            ...defaults,
+            ...verifyOpts
+        } as VerifyOptions) as TPayload;
+        return {
+            payload,
+        }
+    } catch (error: any) {
+        return {
+            error: error.message,
+        }
+    }
 }
 
 /*
