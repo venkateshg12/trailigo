@@ -107,11 +107,9 @@ export const loginUser = async ({ email, password, userAgent }: LoginParams) => 
 
 export const refreshUserAccessToken = async (refreshToken: string) => {
 
-    const payload = verifyToken<RefreshTokenPayload>(refreshToken, {secret: refreshTokenSignOptions.secret}) 
-    console.log(payload);
+    const {payload, error} = verifyToken<RefreshTokenPayload>(refreshToken, {secret: refreshTokenSignOptions.secret}) 
     appAssert(payload, UNAUTHORIZED, "Invalid refresh Token");
-
-    const session = await sessionModel.findById(payload?.sessionId);
+    const session = await sessionModel.findById(payload.sessionId);
     const now = Date.now();
     appAssert(session && session.expiresAt.getTime() > now, UNAUTHORIZED, "Session Expired");
 
