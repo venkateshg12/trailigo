@@ -21,9 +21,10 @@ const MainPage = () => {
   return (
     <>
       <div className="h-[100vh] w-full relative">
-        <div className="absolute h-[10rem] bg-black/40 z-50" />
+        <div className="absolute z-20 inset-0 /*bg-gradient-to-t from-black/10*/ bg-black/40 via-transparent to-black/80 pointer-events-none" />
+        <div className="absolute z-20 inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/50 pointer-events-none" />
         <div
-        className="absolute inset-0"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${mainPageImageContent[1].image})`,
             backgroundPosition: 'center center', // Better for mobile
@@ -34,19 +35,20 @@ const MainPage = () => {
             filter: "brightness(0.9)",
           }}
         >
-          {/* <img src={mainPageImageContent[1].image} alt="" className="w-full h-screen" /> */}
         </div>
-        <div className="flex flex-col">
+        <div className="flex  h-full justify-center gap-[10%] items-center  z-50 relative">
           <div>
-            <span></span>
+            <div className="text-white font-bold text-[7rem]"><span>{mainPageImageContent[0].country}</span></div>
+            <div className="max-w-[42rem]">
+            <span className="text-white">{mainPageImageContent[1].about}</span>
+            </div>
           </div>
           <div>
-
+            <img src={mainPageImageContent[1].smallImg} className="w-[20rem] h-[28rem]" alt="" />
           </div>
         </div>
       </div>
       <div>
-        Map in page of the revenge.
         <Button onClick={() => logout()}>Log Out</Button>
       </div>
     </>

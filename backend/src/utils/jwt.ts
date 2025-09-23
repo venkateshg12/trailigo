@@ -34,44 +34,34 @@ export const refreshTokenSignOptions: SignOptionsAndSecret = {
     secret: JWT_REFRESH_KEY,
 }
 export const signToken = (
-    payload : AccessTokenPayload | RefreshTokenPayload,
-    options ? : SignOptionsAndSecret,
-) =>{
-    const {secret, ...signOpts} = options || accessTokenSignOptions
-    return jwt.sign(payload, secret, {...defaults, ...signOpts})
+    payload: AccessTokenPayload | RefreshTokenPayload,
+    options?: SignOptionsAndSecret,
+) => {
+    const { secret, ...signOpts } = options || accessTokenSignOptions
+    return jwt.sign(payload, secret, { ...defaults, ...signOpts })
 }
 
-/*export function verifyToken(token: string, secret?: string) {
-  const key = secret || JWT_SECRET_KEY;
-  try {
-    // Verify the token
-    const payload = jwt.verify(token, key);
-    return { payload };
-  } catch (err: any) {
-    return { error: err.message };
-  }
-}*/
 
-export const verifyToken = <TPayload extends object = AccessTokenPayload>(token: string,
-    options?: VerifyOptions &
-    { secret?: string }
-) => {
-    const { secret = JWT_SECRET_KEY, ...verifyOpts } = options || {}
+
+export function verifyToken<TPayload extends object>(
+    token: string,
+    options?: VerifyOptions & { secret?: string }
+) {
+    // Use the secret from the options object, or fall back to the default key
+    const { secret = JWT_SECRET_KEY, ...verifyOpts } = options || {};
+
     try {
+        // Verify the token using the secret and any other provided options
         const payload = jwt.verify(token, secret, {
-            ...defaults,
+            // ...defaults, // Optional: if you have app-wide default options to merge
             ...verifyOpts
-        } as VerifyOptions) as TPayload;
-        return {
-            payload,
-        }
-    } catch (error: any) {
-        return {
-            error: error.message,
-        }
+        }) as TPayload; // This tells TypeScript to trust the payload has the shape of TPayload
+
+        return  {payload} ;
+    } catch (err: any) {
+        return { error: err.message };
     }
 }
-
 /*
 jwt.sign(
   { userId: "123" },                   // payload
