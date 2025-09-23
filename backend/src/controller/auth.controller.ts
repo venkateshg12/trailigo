@@ -79,9 +79,8 @@ export const refreshHandler = catchError(async (req, res) => {
 })
 
 export const getUserInfo = catchError(async (req, res) => {
-    const token = req.cookies.accessToken;
-    console.log("token: ", token);
-    // appAssert(!token, UNAUTHORIZED, "Unauthorized User");
+    const token = req.cookies.accessToken as string | undefined
+    appAssert(token, UNAUTHORIZED, "Unauthorized User");
     // verify token
     const result = verifyToken(token || " ");
     if ("payload" in result) {
