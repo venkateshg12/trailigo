@@ -7,9 +7,9 @@ import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicOnlyRoute from "./components/PublicRoute";
-import { Main } from "./pages/Main";
-import Page from "./pages/Page";
-import MainP from "./pages/MainP";
+import { Main } from "./temp/Main";
+import Page from "./temp/Page";
+import MainP from "./temp/MainP";
 const App = () => {
   return (
     <div>
@@ -24,7 +24,7 @@ const App = () => {
             </Route>
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="/create-trip" element={<MainP />} />
+            <Route path="/create-trip" element={<Page />} /> 
           </Route>
         </Routes>
       </BrowserRouter>
