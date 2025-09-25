@@ -24,7 +24,7 @@ const App = () => {
             </Route>
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="/create-trip" element={<Page />} /> 
+            <Route path="/create-trip" element={<MainPage />} /> 
           </Route>
         </Routes>
       </BrowserRouter>

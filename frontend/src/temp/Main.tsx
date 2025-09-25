@@ -40,50 +40,18 @@ export const Main = () => {
 
     // Prepare next background
     if (nextBgRef.current) {
-      gsap.set(nextBgRef.current, {
-        opacity: 0,
-        scale: 1.1,
-        backgroundImage: `url(${mainPageImageContent[nextIndex].image})`
-      });
+      gsap.set(nextBgRef.current, {opacity: 0,scale: 1.1,backgroundImage: `url(${mainPageImageContent[nextIndex].image})`});
     }
 
     // Complex animation sequence
-    tl
     // Phase 1: Current content exit with stagger
-    .to(titleRef.current, {
-      y: -150,
-      opacity: 0,
-      rotateX: -45,
-      duration: 0.8,
-      ease: "power2.in"
-    })
-    .to(aboutRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power2.in"
-    }, "-=0.6")
-    .to(imageRef.current, {
-      x: -300,
-      opacity: 0,
-      scale: 0.6,
-      rotation: -15,
-      duration: 1,
-      ease: "power2.in"
-    }, "-=0.4")
+    tl.to(titleRef.current, {y: -150,opacity: 0,rotateX: -45,duration: 0.8,ease: "power2.in"})
+    .to(aboutRef.current, {y: -100,opacity: 0,duration: 0.6,ease: "power2.in"}, "-=0.6")
+    .to(imageRef.current, {x: -300,opacity: 0,scale: 0.6,rotation: -15,duration: 1,ease: "power2.in"}, "-=0.4")
     
     // Phase 2: Background transition with zoom effect
-    .to(bgRef.current, {
-      scale: 1.2,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power1.inOut"
-    }, "-=0.4")
-    .to(nextBgRef.current, {
-      opacity: 1,
-      scale: 1,
-      duration: 1,
-      ease: "power2.out",
+    .to(bgRef.current, {scale: 1.2,opacity: 0,duration: 0.8,ease: "power1.inOut"}, "-=0.4")
+    .to(nextBgRef.current, {opacity: 1,scale: 1,duration: 1,ease: "power2.out",
       onComplete: () => {
         // Swap backgrounds
         if (bgRef.current && nextBgRef.current) {
@@ -92,44 +60,16 @@ export const Main = () => {
           gsap.set(nextBgRef.current, { opacity: 0 });
         }
       }
-    }, "-=0.4")
+    }, "-=0.4"
+  )
     
     // Phase 3: New content entrance with bounce
-    .fromTo(titleRef.current, {
-      y: 200,
-      opacity: 0,
-      rotateX: 45,
-      scale: 0.8
-    }, {
-      y: 0,
-      opacity: 1,
-      rotateX: 0,
-      scale: 1,
-      duration: 1.2,
-      ease: "back.out(1.4)"
-    }, "-=0.2")
-    .fromTo(aboutRef.current, {
-      y: 150,
-      opacity: 0
-    }, {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out"
-    }, "-=0.8")
-    .fromTo(imageRef.current, {
-      x: 400,
-      opacity: 0,
-      scale: 0.6,
-      rotation: 20
-    }, {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      rotation: 0,
-      duration: 1.4,
-      ease: "elastic.out(1, 0.6)"
-    }, "-=0.6");
+    .fromTo(titleRef.current, {y: 200,opacity: 0,rotateX: 45,scale: 0.8}, 
+      {y: 0,opacity: 1,rotateX: 0,scale: 1,duration: 1.2,ease: "back.out(1.4)"}, "-=0.2")
+    .fromTo(aboutRef.current, {y: 150,opacity: 0}, 
+      {y: 0,opacity: 1,duration: 1,ease: "power2.out"}, "-=0.8")
+    .fromTo(imageRef.current, {x: 400,opacity: 0,scale: 0.6,rotation: 20}, 
+      {x: 0,opacity: 1,scale: 1,rotation: 0,duration: 1.4,ease: "elastic.out(1, 0.6)"}, "-=0.6");
   };
 
   useEffect(() => {
