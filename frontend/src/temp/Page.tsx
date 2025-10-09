@@ -258,6 +258,34 @@ const Page = () => {
           {isPending ? 'Logging out...' : 'Log Out'}
         </Button>
       </div>
+
+       {/* Enhanced navigation */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex space-x-4">
+          {mainPageImageContent.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => animateToNext(index)}
+              disabled={isAnimating || index === currentIndex}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-white text-black' 
+                  : 'bg-white/20 text-white hover:bg-white/40'
+              } disabled:cursor-not-allowed`}
+            >
+              {item.country}
+            </button>
+          ))}
+        </div>
+
+      <div className="p-8 bg-gray-100">
+        <Button 
+          onClick={() => logout()}
+          disabled={isPending}
+          className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold"
+        >
+          {isPending ? 'Logging out...' : 'Log Out'}
+        </Button>
+      </div>
     </>
   );
 };
