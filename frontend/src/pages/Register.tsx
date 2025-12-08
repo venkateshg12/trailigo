@@ -5,6 +5,8 @@ import { register } from "../lib/api";
 import ImageAnimation from "@/components/ImageAnimation";
 import { handleGoogleLogin, LoadingDots } from "@/constants/constant";
 import google from "../assets/google.png";
+
+
 const Register = () => {
   const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');

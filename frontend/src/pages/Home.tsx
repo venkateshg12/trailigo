@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import { details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo, LoadingSpinnerWithProgress } from "@/constants/constant";
+import { details2, homeInfoFour, HomeInfoOne, homeInfoThree, HomeInfoTwo, LoadingSpinnerWithProgress, Suggestions } from "@/constants/constant";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
@@ -63,7 +63,7 @@ const Home = () => {
         if (imagesLoaded) {
             setTimeout(() => {
                 setAnimationsReady(true);
-                console.log('All images loaded, animations ready');
+                // console.log('All images loaded, animations ready');
             }, 100);
         }
     }, [imagesLoaded]);
@@ -80,10 +80,20 @@ const Home = () => {
                 </div>
                 <div className="absolute inset-0 z-50 px-[1rem] flex flex-col items-center bg-black/50 md:-mt-[12rem] justify-center">
                     <h1 ref={titleRef}  style={{ visibility: 'hidden' }} className="text-white   max-[500px]:text-[3rem]  min-[500px]:text-[5rem] 2xl:text-[7rem] font-bold font-tumbler tracking-widest">Trailigo</h1>
-                    <span className="char-7 text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal ">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
+                    <span className="char-7 font-freight tracking-wider text-white text-center 2xl:text-[3rem] md:text-[1.4rem] text-[1rem] font-montreal ">Your personal  travel curator—designing unforgettable journeys tailored to your style, interests, and budget.</span>
                     <Link to="/signin">
-                        <button className="px-3 py-1 bg-red-500 text-white rounded-2xl my-3 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
+                        <button className="font-tumbler px-3 py-1 bg-red-500 text-white rounded-2xl my-5 text-xl md:text-2xl 2xl:text-4xl ring-2 cursor-pointer floating active:scale-95 ring-white">Explore Now</button>
                     </Link>
+                    <div className="flex gap-10 w-full justify-center">
+                        {
+                            Suggestions.map((info, index) => (
+                                <div key={index} className="max-w-[14rem] flex p-1 w-full border backdrop-backdrop-blur-xl border-cyan-300 rounded-2xl  items-center justify-evenly">
+                                    <span>{info.icon}</span>
+                                    <span className="text-white hover:text-cyan-400 cursor-context-menu">{info.title}</span>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div>
                 </div>

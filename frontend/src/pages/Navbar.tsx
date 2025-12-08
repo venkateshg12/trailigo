@@ -37,7 +37,7 @@ const Navbar = () => {
 
     return (
         <div >
-            <div className="w-full bg-transparent">
+            <div className="w-full  ">
                 <div className=" px-4 md:px-8 lg:px-7  py-5 md:py-6 lg:py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex-shrink-0 z-50 md:pl-[2rem] 2xl: pl-[3rem] cursor-pointer">

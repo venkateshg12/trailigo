@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const WithHeaderLayOut = () => {
   return (
     <>
-      <div className="top-0 z-[100] left-0 w-full absolute">
+      <div className="top-0 absolute z-[100] left-0 w-full">
         <Navbar />
       </div>
       <Outlet />

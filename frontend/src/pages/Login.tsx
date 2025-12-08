@@ -14,7 +14,7 @@ const SignIn = () => {
   const { mutate: signIn, isPending, isError, error } = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      navigate('/create-trip', {
+      navigate('/home', {
         replace: true,
       })
     }

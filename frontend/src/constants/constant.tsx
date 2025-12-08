@@ -1,9 +1,12 @@
+import React from 'react';
 import { useState } from "react";
 import bananaBeach from "../assets/beacch.webp";
 import burjAlarab from "../assets/burj-alarab.webp";
 import glacier from "../assets/glacier.webp";
 import mountain from "../assets/mountain.webp";
 import switzerland from "../assets/switzerland.webp";
+import ImageAnimation from "@/components/ImageAnimation";
+import { Earth, Globe, Landmark } from 'lucide-react';
 
 export const navlinks = [{ name: "Home", path: "/" }, { name: "Register", path: "/register" }, { name: "Sign In", path: "/signin" }];
 
@@ -47,16 +50,16 @@ export const mainPageImageContent = [
         about: "Darjeeling is a hill station in West Bengal, India, located in the Lesser Himalayas at about 2,000 meters (6,700 ft) above sea level. It’s famous for its tea, views of the Kanchenjunga (the world’s third-highest mountain), and colonial charm."
     },
     {
-        image : "https://images.unsplash.com/photo-1622308644420-b20142dc993c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        smallImg : "https://images.unsplash.com/photo-1603755962670-a6f92be76d5e?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1622308644420-b20142dc993c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg: "https://images.unsplash.com/photo-1603755962670-a6f92be76d5e?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         country: "Japan",
         about: "An island nation in East Asia, made up of 4 main islands — Honshu, Hokkaido, Kyushu, and Shikoku — plus thousands of smaller ones.Surrounded by the Pacific Ocean, with mountains (like Mt. Fuji), forests, hot springs, and bustling cities."
     },
-    { 
-        image : "https://images.unsplash.com/photo-1473951574080-01fe45ec8643?q=80&w=1204&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        smallImg : "https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        country: "france", 
-        about: "France 🇫🇷 is a country in Western Europe known for its rich history, art, culture, and fashion. Its capital, Paris, is famous for landmarks like the Eiffel Tower and the Louvre Museum. France is celebrated for its cuisine, wine, and romantic charm" 
+    {
+        image: "https://images.unsplash.com/photo-1473951574080-01fe45ec8643?q=80&w=1204&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        smallImg: "https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        country: "france",
+        about: "France 🇫🇷 is a country in Western Europe known for its rich history, art, culture, and fashion. Its capital, Paris, is famous for landmarks like the Eiffel Tower and the Louvre Museum. France is celebrated for its cuisine, wine, and romantic charm"
     },
 ]
 
@@ -113,6 +116,22 @@ export const HomeInfoTwo = [
         image: image23,
         className: "md:mr-auto",
     }
+]
+
+export const Suggestions = [
+    {
+        title : 'Discover Hidden Gems',
+        icon : <Landmark className='text-white h-5 w-5 hover:text-cyan-400' />
+    },
+    {
+        title: 'Begin Your Travel Story',
+        icon: <Earth className='text-white h-5 w-5 hover:text-cyan-400' />
+    },
+    {
+        title : 'Uncover Wild Adventures',
+        icon : <Globe className='text-white h-5 w-5 hover:text-cyan-400' />
+    }
+
 ]
 
 export const details2 = "Take the stress out of trip planning. Our intelligent platform helps you manage flights, hotels, bookings, and even travel tips—everything you need, all in one convenient spot.";
@@ -190,8 +209,6 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
 export default HamburgerMenu;
 
 
-import React from 'react';
-import ImageAnimation from "@/components/ImageAnimation";
 export const Spinner = () => {
     return <div className="spinner"></div>;
 };
