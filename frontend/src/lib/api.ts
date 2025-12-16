@@ -45,7 +45,7 @@ export const fetchUser = async ():Promise<User> => {
     console.log("fetchUser called");
     try {
         const res = await API.get("/auth/user", { withCredentials: true });
-        console.log("Backend response:", res.data);
+        // console.log("Backend response:", res.data);
         return res.data;
     } catch (err) {
         console.log("Error fetching user:", err);

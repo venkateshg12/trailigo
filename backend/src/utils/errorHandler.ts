@@ -2,7 +2,6 @@ import { ErrorRequestHandler, Response } from "express";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from "../constants/http";
 import AppError from "./appError";
 import z, { ZodError } from "zod";
-import { log } from "node:console";
 
 const handleAppError = (res: Response, error: AppError) => {
     return res.status(error.statusCode).json({ message: error.message })

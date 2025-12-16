@@ -116,7 +116,7 @@ export const googleAuthCallback = (req: Request, res: Response, next: NextFuncti
             const accessToken = signToken({ userId: user._id, sessionId: session._id });
 
             setAuthCookies({ res, accessToken, refreshToken });
-            return res.redirect(`${APP_ORIGIN}/create-trip`);
+            return res.redirect(`${APP_ORIGIN}/home`);
         } catch (error) {
             return res.redirect(`${APP_ORIGIN}/?error=session_failed`);
         }

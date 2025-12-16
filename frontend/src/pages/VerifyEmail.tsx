@@ -85,7 +85,7 @@ const VerifyEmail = () => {
     useEffect(() => {
         if (isVerified) {
             const timer = setTimeout(() => {
-                navigate("/create-trip", { replace: true });
+                navigate("/home", { replace: true });
             }, 3000);
 
             // Cleanup function to clear the timer if the component unmounts

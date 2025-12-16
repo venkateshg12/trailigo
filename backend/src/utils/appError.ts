@@ -1,4 +1,3 @@
-import AppErrorCode from "../constants/appErrorCode";
 import { HttpStatusCode } from "../constants/http";
 
 class AppError extends Error {
@@ -7,5 +6,4 @@ class AppError extends Error {
         public message: string,
     ) { super(message) };
 }
-
 export default AppError;

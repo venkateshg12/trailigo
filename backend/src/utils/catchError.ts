@@ -15,7 +15,6 @@ const catchError = (controller: AsyncController): AsyncController =>
             whenever error occurs the next function directly jumps to the errorHandler function which we written for error handler
             this is the feature of express middleware and any function with having 4 parameters(error, req, res, next) is a error handling function
             */
-
             next(error)
         }
     }

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import queryClient from "@/config/queryClient";
 import { logOut } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { mainPageImageContent } from "@/constants/constant";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -111,6 +111,9 @@ const MainPage = () => {
       </div>
       <div>
         <Button onClick={() => logout()}>Log Out</Button>
+        <Link to="/create-trip">
+        <Button className="m-5 ">Create Trip</Button>
+        </Link>
       </div>
     </>
   )
