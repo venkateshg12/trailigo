@@ -1,6 +1,4 @@
 import API from "@/config/appClient";
-// import type { User } from "@/constants/constant";
-
 
 export interface RegisterData {
     name: string;
