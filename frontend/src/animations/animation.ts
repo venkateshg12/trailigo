@@ -24,7 +24,7 @@ const createScrollTrigger = (triggerElement: Element, timeline: GSAPTimeline) =>
     });
 };
 
-export const registerAnimateCharsEffect = () => {
+export const  registerAnimateCharsEffect = () => {
     if (gsap.effects.animateChars) return; // prevent duplicate registration
 
     gsap.registerEffect({

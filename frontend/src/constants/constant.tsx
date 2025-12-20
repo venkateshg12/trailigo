@@ -6,7 +6,7 @@ import glacier from "../assets/glacier.webp";
 import mountain from "../assets/mountain.webp";
 import switzerland from "../assets/switzerland.webp";
 import ImageAnimation from "@/components/ImageAnimation";
-import { Earth, Globe, Landmark } from 'lucide-react';
+import { Earth, Globe, Landmark, MapPinHouse } from 'lucide-react';
 
 export const navlinks = [{ name: "Home", path: "/" }, { name: "Register", path: "/register" }, { name: "Sign In", path: "/signin" }];
 
@@ -121,18 +121,93 @@ export const HomeInfoTwo = [
 export const Suggestions = [
     {
         title : 'Discover Hidden Gems',
-        icon : <Landmark className='text-white h-5 w-5 hover:text-cyan-400' />
+        icon : <Landmark className='text-blue-500 h-5 w-5 hover:text-red-400' />
     },
     {
         title: 'Begin Your Travel Story',
-        icon: <Earth className='text-white h-5 w-5 hover:text-cyan-400' />
+        icon: <Earth className='text-blue-500 h-5 w-5 hover:text-red-400' />
     },
     {
         title : 'Uncover Wild Adventures',
-        icon : <Globe className='text-white h-5 w-5 hover:text-cyan-400' />
+        icon : <Globe className='text-blue-500 h-5 w-5 hover:text-red-400' />
     }
 
 ]
+
+export const ASuggestions = [
+    {
+        title : "Plan a new Trip",
+        icon : <Globe className='text-blue-500 h-5 w-5 hover:text-red-400' />
+    },
+    {
+        title : "Inspire me where to go",
+        icon :   <MapPinHouse className='text-blue-500 h-5 w-5 hover:text-red-400' />
+    },
+    {
+        title : "Discover Hidden Gems",
+        icon : <Landmark className='text-blue-500 h-5 w-5 hover:text-red-400'/>
+    },
+    {
+        title : "Adventure Destinations",
+        icon : <Earth className='text-blue-500 h-5 w-5 hover:text-red-400'/>
+    }
+]
+
+export const SelectTravelsList = [
+  {
+    id: 1,
+    title: 'Just Me',
+    desc: 'A solo travel experience focused on self-discovery and exploration',
+    icon: '✈️',
+    people: '1'
+  },
+  {
+    id: 2,
+    title: 'A Couple',
+    desc: 'A romantic getaway for two travelers exploring together',
+    icon: '💑',
+    people: '2 People'
+  },
+  {
+    id: 3,
+    title: 'Family',
+    desc: 'A joyful family trip filled with bonding and shared memories',
+    icon: '👨‍👩‍👧‍👦',
+    people: '3 to 5 People'
+  },
+  {
+    id: 4,
+    title: 'Friends',
+    desc: 'A fun-filled adventure with friends, laughter, and unforgettable moments',
+    icon: '👫',
+    people: '5 to 7 People'
+  }
+];
+
+export const SelectBudgetOptions = [
+  {
+    id: 1,
+    title: 'Cheap',
+    desc: 'Stay conscious of costs and travel on a tight budget',
+    icon: '💸',
+    color: 'bg-green-100 text-green-600'
+  },
+  {
+    id: 2,
+    title: 'Moderate',
+    desc: 'Keep costs balanced while enjoying a comfortable trip',
+    icon: '💰',
+    color: 'bg-yellow-100 text-yellow-600'
+  },
+  {
+    id: 3,
+    title: 'Luxury',
+    desc: 'Travel in style without worrying about expenses',
+    icon: '💎',
+    color: 'bg-purple-100 text-purple-600'
+  }
+];
+
 
 export const details2 = "Take the stress out of trip planning. Our intelligent platform helps you manage flights, hotels, bookings, and even travel tips—everything you need, all in one convenient spot.";
 

@@ -1,5 +1,4 @@
-import jwt from "jsonwebtoken";
-import { CREATED, NOT_FOUND, OK, UNAUTHORIZED } from "../constants/http";
+import { CREATED, OK, UNAUTHORIZED } from "../constants/http";
 import sessionModel from "../models/session.model";
 import { createAccount, loginUser, refreshUserAccessToken } from "../services/auth.services";
 import { verifyOTP } from "../services/verifyOtp.services";
@@ -9,8 +8,6 @@ import { clearAuthCookies, getAccessTokenCookieOptions, getRefreshTokenCookieOpt
 import { refreshTokenSignOptions, signToken, verifyToken } from "../utils/jwt";
 import { loginSchema, registerSchema } from "./auth.schema"
 import userModel from "../models/user.model";
-import AppError from "../utils/appError";
-import mongoose from "mongoose";
 import passport from "passport";
 import { NextFunction, Request, Response } from "express";
 import { APP_ORIGIN } from "../constants/env";

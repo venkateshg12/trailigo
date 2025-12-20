@@ -20,3 +20,4 @@ export const GOOGLE_CLIENT_ID = getEnv("GOOGLE_CLIENT_ID");
 export const GOOGLE_CLIENT_SECRET = getEnv("GOOGLE_CLIENT_SECRET");
 export const CALLBACK_URL = getEnv("CALLBACK_URL");
 export const ARCJET_KEY = getEnv("ARCJET_KEY");
+export const OPENAIROUTER_API_KEY = getEnv("OPENAIROUTER_API_KEY");

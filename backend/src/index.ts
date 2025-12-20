@@ -12,6 +12,7 @@ import passport from "passport" // npm install --save @types/passport-google-oau
 import "./config/passport";
 import arcjet, { detectBot, shield, tokenBucket } from "@arcjet/node";
 import { isSpoofedBot } from "@arcjet/inspect";
+import openaiRoutes from "./routes/openai.routes";
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(cookieParser());
 // ))
 // .use() is a method in express that actually registers the middleware and connects the routes together.
 app.use("/auth", authRoutes);
+app.use("/processUserInfo", openaiRoutes);
 
 app.use(errorHandler);
 
