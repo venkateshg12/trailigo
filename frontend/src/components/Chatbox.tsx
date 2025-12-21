@@ -7,9 +7,10 @@ import EmptyState from "./EmptyState";
 import { BudgetUi, GroupSizedUi } from "./UiOptions";
 
 type Message = {
-    role: string,
-    content: string,
-    ui?: string
+    role: string;
+    content: string;
+    ui?: string | null;
+    budget?: string[] | undefined;
 }
 const Chatbox = () => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -22,23 +23,31 @@ const Chatbox = () => {
     }, [messages, isLoading]);
 
 
-
-
-
     const submitUserResponse = async (input?: string) => {
         const text = input ?? userInput;
         if (!text?.trim()) return;
+        const newMsg: Message = {
+            role: 'user',
+            content: text
+        }
+        const updatedMessages = [...messages, newMsg];
         try {
             setUserInput('');
-            const newMsg: Message = {
-                role: 'user',
-                content: text
-            }
-            setMessages((prev: Message[]) => [...prev, newMsg]);
+            // setMessages((prev: Message[]) => [...prev, newMsg]);
+            setMessages(updatedMessages);
             setIsLoading(true);
-            const response = await submitUserData({ messages: [...messages, newMsg] });
-            setMessages((prev: Message[]) => [...prev, { role: 'assistant', content: response?.resp, ui: response?.ui }])
-            console.log(response?.resp);
+            const response = await submitUserData({ messages: updatedMessages });
+            // setMessages((prev: Message[]) => [...prev, { role: 'assistant', content: response?.resp, ui: response?.ui, budget:response?.budget}])
+            setMessages(prev => [
+                ...prev,
+                {
+                    role: 'assistant',
+                    content: response?.resp,
+                    ui: response?.ui,
+                    budget: response?.budget
+                }
+            ]);
+            console.log(response);
 
         } catch (error) {
             console.log(error);
@@ -48,10 +57,10 @@ const Chatbox = () => {
 
     }
 
-    const renderGenerativeUi = (ui: string) => {
-        if (ui === 'budget') {
-            return <BudgetUi onSelectOptions={(v: string) => submitUserResponse(v)} />
-        } else if (ui === 'groupSize') {
+    const renderGenerativeUi = (msg: Message) => {
+        if (msg.ui === 'budget' && Array.isArray(msg.budget)) {
+            return <BudgetUi onSelectOptions={(v: string) => submitUserResponse(v)} budget={msg?.budget} />
+        } else if (msg.ui === 'groupSize') {
             return <GroupSizedUi onSelectOptions={(v: string) => submitUserResponse(v)} />
         }
         return null;
@@ -75,7 +84,7 @@ const Chatbox = () => {
                                 <div className="flex mt-5" key={index}>
                                     <div className="px-3 py-1 text-sm md:text-md rounded-md bg-gray-200 text-black">
                                         {msg.content}
-                                        {renderGenerativeUi(msg.ui ?? '')}
+                                        {renderGenerativeUi(msg)}
                                     </div>
                                 </div>
                             )
@@ -107,7 +116,7 @@ const Chatbox = () => {
                             }
                         }}
                         className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none " />
-                    <Button onClick={submitUserResponse} size={'icon'} className="absolute cursor-pointer active:scale-[1.05] hover:scale-[0.95] bg-blue-700 bottom-2 right-2"><Send className=" h-4 w-4" /></Button>
+                    <Button onClick={() =>submitUserResponse()} size={'icon'} className="absolute cursor-pointer active:scale-[1.05] hover:scale-[0.95] bg-blue-700 bottom-2 right-2"><Send className=" h-4 w-4" /></Button>
                 </div>
             </section>
         </div>

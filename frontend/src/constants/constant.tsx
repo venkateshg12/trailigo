@@ -6,7 +6,7 @@ import glacier from "../assets/glacier.webp";
 import mountain from "../assets/mountain.webp";
 import switzerland from "../assets/switzerland.webp";
 import ImageAnimation from "@/components/ImageAnimation";
-import { Earth, Globe, Landmark, MapPinHouse } from 'lucide-react';
+import { Earth, Globe, Landmark, MapPinHouse, Users } from 'lucide-react';
 
 export const navlinks = [{ name: "Home", path: "/" }, { name: "Register", path: "/register" }, { name: "Sign In", path: "/signin" }];
 
@@ -179,7 +179,7 @@ export const SelectTravelsList = [
     id: 4,
     title: 'Friends',
     desc: 'A fun-filled adventure with friends, laughter, and unforgettable moments',
-    icon: '👫',
+    icon: <Users/>,
     people: '5 to 7 People'
   }
 ];
