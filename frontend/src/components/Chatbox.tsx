@@ -4,13 +4,14 @@ import { Textarea } from "./ui/textarea";
 import { useEffect, useRef, useState } from "react";
 import { submitUserData } from "@/lib/openai";
 import EmptyState from "./EmptyState";
-import { BudgetUi, GroupSizedUi } from "./UiOptions";
+import { BudgetUi, GroupSizedUi, InterestsUi, TripDuration } from "./UiOptions";
 
 type Message = {
     role: string;
     content: string;
     ui?: string | null;
     budget?: string[] | undefined;
+    interests?:string[] | undefined;
 }
 const Chatbox = () => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -44,7 +45,8 @@ const Chatbox = () => {
                     role: 'assistant',
                     content: response?.resp,
                     ui: response?.ui,
-                    budget: response?.budget
+                    budget: response?.budget,
+                    interests : response?.interests
                 }
             ]);
             console.log(response);
@@ -62,6 +64,10 @@ const Chatbox = () => {
             return <BudgetUi onSelectOptions={(v: string) => submitUserResponse(v)} budget={msg?.budget} />
         } else if (msg.ui === 'groupSize') {
             return <GroupSizedUi onSelectOptions={(v: string) => submitUserResponse(v)} />
+        } else if (msg.ui === 'tripDuration') {
+            return <TripDuration onSelectOptions={(v: string) => submitUserResponse(v)} />
+        }else if (msg.ui === 'interests' && Array.isArray(msg.interests)) {
+            return <InterestsUi interests={msg?.interests} />
         }
         return null;
 
@@ -82,7 +88,7 @@ const Chatbox = () => {
                                 </div>
                             ) : (
                                 <div className="flex mt-5" key={index}>
-                                    <div className="px-3 py-1 text-sm md:text-md rounded-md bg-gray-200 text-black">
+                                    <div className="px-3 py-2 text-sm md:text-md rounded-md bg-gray-200 text-black">
                                         {msg.content}
                                         {renderGenerativeUi(msg)}
                                     </div>
@@ -116,7 +122,7 @@ const Chatbox = () => {
                             }
                         }}
                         className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none " />
-                    <Button onClick={() =>submitUserResponse()} size={'icon'} className="absolute cursor-pointer active:scale-[1.05] hover:scale-[0.95] bg-blue-700 bottom-2 right-2"><Send className=" h-4 w-4" /></Button>
+                    <Button onClick={() => submitUserResponse()} size={'icon'} className="absolute cursor-pointer active:scale-[1.05] hover:scale-[0.95] bg-blue-700 bottom-2 right-2"><Send className=" h-4 w-4" /></Button>
                 </div>
             </section>
         </div>
