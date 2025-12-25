@@ -187,7 +187,7 @@ export const SelectTravelsList = [
 export const SelectBudgetOptions = [
   {
     id: 1,
-    title: 'Cheap',
+    title: 'Low',
     desc: 'Stay conscious of costs and travel on a tight budget',
     icon: '💸',
     color: 'bg-green-100 text-green-600'
