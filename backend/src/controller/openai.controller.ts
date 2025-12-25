@@ -1,7 +1,11 @@
+import Groq from "groq-sdk";
 import catchError from "../utils/catchError";
 import OpenAI from 'openai'; // npm install --save-dev @types/node
 import { OPENAIROUTER_API_KEY } from '../constants/env';
-import { ja } from "zod/v4/locales/index.cjs";
+
+const groq = new Groq({
+  apiKey: OPENAIROUTER_API_KEY,
+});
 
 const PROMPT = `You are an AI Trip Planner Agent.
 
@@ -42,7 +46,6 @@ QUESTION FLOW (DO NOT CHANGE)
 4. Trip duration (number of days)
 5. Budget (Cheap, Moderate, High)
 6. Travel interests (adventure, sightseeing, cultural, food, nightlife, relaxation)
-7. Special requirements or preferences (if any)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SPECIAL USER INTENTS (START ONLY)
@@ -64,7 +67,6 @@ TEXT-ONLY STEP RULE (MANDATORY)
 - The following steps MUST ALWAYS have ui = null:
   - Starting location (Step 1)
   - Destination city or country (Step 2)
-  - Travel interests (Step 6)
   - Special requirements (Step 7)
 - Attaching ANY UI value to these steps is STRICTLY FORBIDDEN.
 
@@ -124,7 +126,7 @@ SMART BUDGET RULE (STEP 5 — STRICT & HONEST)
 ]
 
 - These represent:
-  - Cheap
+  - Low
   - Moderate
   - High
 
@@ -153,18 +155,47 @@ BUDGET ANSWER RECOGNITION RULE:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 - When the user provides a message containing both:
-- a budget category (Cheap / Moderate / High)
+- a budget category (Low / Moderate / High)
   - AND a price range
 - You MUST treat the budget step as COMPLETED.
 - You MUST NOT ask the budget question again.
 - Immediately proceed to the next step.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TRAVEL INTERESTS RULE (STEP 6 — MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- When asking about travel interests (Step 6):
+  - You MUST include an "interests" array in the JSON.
+  - The "interests" array MUST contain relevant interest categories
+    based on the destination and trip context.
+
+- The interests MUST be dynamically chosen.
+- You MUST NOT always return the same fixed list.
+
+- Examples of interest mapping (guidelines, not exhaustive):
+  - Beach / Island destinations → adventure, relaxation, food, nightlife
+  - Historic cities → sightseeing, cultural, food
+  - Nature / mountains → adventure, sightseeing, relaxation
+  - Party cities → nightlife, food, sightseeing
+  - Spiritual destinations → cultural, sightseeing, relaxation
+
+- The "interests" array MUST:
+  - Contain at least 3 values
+  - Contain at most 6 values
+  - Use lowercase strings only
+  - Never contain duplicates
+
+- The response MUST:
+  - Ask the user to choose one or more interests
+  - Have ui = interests
+  - Have budget = null
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 UI NULL ENFORCEMENT (ABSOLUTE):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - For text-only questions, ui MUST be null.
 - You MUST NEVER attach any UI to:
-  - Travel interests
   - Special requirements
 - Attaching ANY UI to these steps is a critical error.
 
@@ -192,6 +223,7 @@ UI FIELD RULES (SYSTEM ONLY)
   - Trip duration question → "tripDuration"
   - Budget selection question → "budget"
   - Final trip plan → "final"
+  - Travel Interest question →  "interests"
   - All other questions → null
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -220,9 +252,30 @@ FINAL RESPONSE RULE
 
 {
   "resp": "Text shown to the user",
-  "ui": "groupSize | tripDuration | budget | final | null",
-  "budget": ["$X - $Y", "$Y - $Z", "$Z - more"] | null
+  "ui": "groupSize | tripDuration | budget | final | interests | null",
+  "budget": ["$X - $Y", "$Y - $Z", "$Z - more"] | null,
+  "interests" : ["adventure","sightseeing","nightlife",] | null,
 }
+
+- You MUST NEVER return:
+  - Empty objects {}
+  - Partial JSON
+  - Escaped JSON
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ABSOLUTE OUTPUT FORMAT (MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- You MUST output EXACTLY ONE JSON object.
+- Wrap the JSON object inside the following delimiters:
+
+<json>
+{ ... }
+</json>
+
+- NEVER output multiple JSON objects.
+- NEVER repeat JSON.
+- NEVER output empty JSON {}.
+- If unsure, output the safe fallback JSON.
 
 `
 type OpenRouterMessage = {
@@ -230,41 +283,85 @@ type OpenRouterMessage = {
   reasoning?: string | null;
   reasoning_details?: { text?: string }[];
 };
+
 export const processUserData = catchError(async (req, res) => {
   const { messages } = await req.body;
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: "messages array is required" });
   }
 
-  const openai = new OpenAI({
+  /* const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
     apiKey: OPENAIROUTER_API_KEY,
-    /*  defaultHeaders: {
+     defaultHeaders: {
        "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
        "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
-     }, */
-  });
+     }, 
+  });*/
+
+  /*const completion = await openai.chat.completions.create({
+    // model: "meta-llama/llama-3.3-70b-instruct:free",
+     model: "moonshotai/kimi-k2:free",
+    response_format: { type: "json_object" },
+    messages: [
+      { role: "system", content: PROMPT },
+      ...sanitizedMessages
+    ]
+  }); */
+
+  /*let completion;
+  try {
+    completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: PROMPT },
+        ...sanitizedMessages,
+      ],
+    });
+  } catch (err) {
+    console.error("Groq API error:", err);
+    return res.status(500).json({ error: "LLM request failed" });
+    }*/
 
   const sanitizedMessages = messages.map((m: any) => ({
     role: m.role,
     content: m.content
   }));
 
-  const completion = await openai.chat.completions.create({
-    model: "meta-llama/llama-3.3-70b-instruct:free",
-    response_format: { type: "json_object" },
-    messages: [
-      { role: "system", content: PROMPT },
-      ...sanitizedMessages
-    ]
-  });
+  const openai = new OpenAI({
+    apiKey: OPENAIROUTER_API_KEY,
+    baseURL: 'https://integrate.api.nvidia.com/v1',
+  })
 
-  const message = completion.choices[0].message;
+  let completion;
+  try {
+    completion = await openai.chat.completions.create({
+      model: "meta/llama-3.3-70b-instruct",
+      // response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: PROMPT },
+        ...sanitizedMessages,
+      ],
+      temperature: 0.2,
+      top_p: 0.7,
+      max_tokens: 1024,
+      stream: false
+    })
+  } catch (err) {
+    console.error("Groq API error:", err);
+    return res.status(500).json({ error: "LLM request failed" });
 
-  const raw = message.content?.trim();
+  }
+
+
+  const message = completion?.choices?.[0]?.message;
+  const raw = message?.content?.trim();
 
   if (!raw) {
-    throw new Error("Model returned empty response");
+    return res.status(500).json({
+      error: "Model returned empty response",
+    });
   }
 
   const jsonText = extractJson(raw);
@@ -272,26 +369,48 @@ export const processUserData = catchError(async (req, res) => {
   if (!jsonText) {
     return res.status(500).json({
       error: "No JSON found in model output",
-      raw
+      raw,
     });
   }
+
+  
+  if (jsonText.includes('}{')) {
+    console.error("Multiple JSON objects detected:", jsonText);
+
+    return res.status(200).json({
+      resp: "Please clarify your last answer so I can continue planning your trip.",
+      ui: null,
+      budget: null,
+      interests: null,
+    });
+  }
+
 
   let parsed;
   try {
     parsed = JSON.parse(jsonText);
-  } catch {
-    return res.status(500).json({
-      error: "Invalid JSON from model",
-      raw
+  } catch (e) {
+    console.error("JSON parse failed:", jsonText);
+    return res.status(200).json({
+      resp: "Please clarify your last answer so I can continue planning your trip.",
+      ui: null,
+      budget: null,
+      interests: null,
     });
   }
+  return res.status(200).json(parsed);
+});
 
-  res.json(parsed);
-})
-
-function extractJson(text: string) {
+/* function extractJson(text: string) {
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
   if (start === -1 || end === -1 || end < start) return null;
   return text.slice(start, end + 1);
+} */
+
+function extractJson(text: string) {
+  const match = text.match(/<json>([\s\S]*?)<\/json>/);
+  if (!match) return null;
+  return match[1].trim();
 }
+
