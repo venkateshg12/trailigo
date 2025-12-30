@@ -1,13 +1,28 @@
 import { Star } from "lucide-react";
 import type { Hotels } from "./Chatbox";
 import { FINAL_DATA } from "@/constants/constant";
+import { useMutation } from "@tanstack/react-query";
+import { getPlacesInfo } from "@/lib/trip";
+import { useEffect } from "react";
 
 export type Props = {
-  hotel : Hotels;
+  hotel: Hotels;
 }
 const destination = FINAL_DATA?.destination;
 
 const HotelCardItem = ({ hotel }: Props) => {
+  const { mutate: getgoolePlacesInfo } = useMutation({
+    mutationFn: getPlacesInfo,
+    onSuccess: (data) => {
+      console.log("data fetch successfully", data);
+    },
+  });
+
+  useEffect(() => {
+     if (!hotel) return;
+    const placeName = hotel?.hotel_name + "," + destination;
+    hotel && getgoolePlacesInfo(placeName);
+  }, [hotel]);
   return (
     <div
       className="group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl m-1 transition-all duration-300"
