@@ -1,4 +1,5 @@
 import Chatbox from "@/components/Chatbox";
+import Itinerary from "@/components/Itinerary";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -16,16 +17,16 @@ const CreateTrip = () => {
                         <Link to="/contact" className=" hover:underline active:scale-[0.95]">Contact Us</Link>
                     </div>
                     <div>
-                        <Button>Create New Trip</Button>
+                        <Button>My Trips</Button>
                     </div>
                 </nav>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-3">
                 <div>
                     <Chatbox />
                 </div>
-                <div>
-                    map to display
+                <div className="col-span-2">
+                    <Itinerary />
                 </div>
             </div>
         </div>
