@@ -276,7 +276,71 @@ ABSOLUTE OUTPUT FORMAT (MANDATORY)
 - NEVER repeat JSON.
 - NEVER output empty JSON {}.
 - If unsure, output the safe fallback JSON.
+`
 
+const FINAL_PROMPT = `
+Generate a travel plan with detailed information.
+
+Include:
+- Hotel options with hotel name, hotel address, price per night, hotel image URL, geo coordinates, rating, and description.
+- A day-wise itinerary with place name, place details, place image URL, geo coordinates, place address, ticket pricing, travel time between locations, best time to visit each place, and best time to visit per day.
+
+CRITICAL OUTPUT RULES (MANDATORY):
+- Respond with ONLY valid JSON.
+- Do NOT include explanations, greetings, markdown, or code fences.
+- Do NOT add text before or after the JSON.
+- The FIRST character of the response MUST be '{'.
+- The LAST character of the response MUST be '}'.
+- The response MUST strictly follow the schema below.
+- Do NOT omit any fields.
+- If exact data is unavailable, return reasonable estimates.
+
+OUTPUT SCHEMA:
+{
+  "trip_plan": {
+    "destination": "string",
+    "duration": "string",
+    "origin": "string",
+    "budget": "string",
+    "group_size": "string",
+    "hotels": [
+      {
+        "hotel_name": "string",
+        "hotel_address": "string",
+        "price_per_night": "string",
+        "hotel_image_url": "string",
+        "geo_coordinates": {
+          "latitude": "number",
+          "longitude": "number"
+        },
+        "rating": "number",
+        "description": "string"
+      }
+    ],
+    "itinerary": [
+      {
+        "day": "number",
+        "day_plan": "string",
+        "best_time_to_visit_day": "string",
+        "activities": [
+          {
+            "place_name": "string",
+            "place_details": "string",
+            "place_image_url": "string",
+            "geo_coordinates": {
+              "latitude": "number",
+              "longitude": "number"
+            },
+            "place_address": "string",
+            "ticket_pricing": "string",
+            "time_travel_each_location": "string",
+            "best_time_to_visit": "string"
+          }
+        ]
+      }
+    ]
+  }
+}
 `
 type OpenRouterMessage = {
   content?: string | null;
@@ -285,7 +349,7 @@ type OpenRouterMessage = {
 };
 
 export const processUserData = catchError(async (req, res) => {
-  const { messages } = await req.body;
+  const { messages, isFinal } = await req.body;
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: "messages array is required" });
   }
@@ -340,12 +404,12 @@ export const processUserData = catchError(async (req, res) => {
       model: "meta/llama-3.3-70b-instruct",
       // response_format: { type: "json_object" },
       messages: [
-        { role: "system", content: PROMPT },
+        { role: "system", content: isFinal ? FINAL_PROMPT : PROMPT },
         ...sanitizedMessages,
       ],
       temperature: 0.2,
       top_p: 0.7,
-      max_tokens: 1024,
+      max_tokens: 3000,
       stream: false
     })
   } catch (err) {
@@ -373,7 +437,7 @@ export const processUserData = catchError(async (req, res) => {
     });
   }
 
-  
+
   if (jsonText.includes('}{')) {
     console.error("Multiple JSON objects detected:", jsonText);
 
@@ -408,9 +472,17 @@ export const processUserData = catchError(async (req, res) => {
   return text.slice(start, end + 1);
 } */
 
-function extractJson(text: string) {
+/* function extractJson(text: string) {
   const match = text.match(/<json>([\s\S]*?)<\/json>/);
   if (!match) return null;
   return match[1].trim();
+}
+ */
+
+function extractJson(text: string) {
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1 || end < start) return null;
+  return text.slice(start, end + 1);
 }
 
